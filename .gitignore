@@ -1,0 +1,10 @@
+/node_modules
+/public
+/.temp
+.env
+.env.backup
+bin.js
+craftsman.imba
+npm-debug.log
+yarn-error.log
+*.tgz

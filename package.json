@@ -1,0 +1,34 @@
+{
+  "name": "@formidablejs/console",
+  "version": "0.0.1",
+  "description": "The Formidable Console",
+  "author": "Donald Pakkies",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "types": "types/index.d.ts",
+  "publisher": "formidable/Package.js",
+  "bugs": "https://github.com/formidablejs/console/issues",
+  "repository": "https://github.com/formidablejs/console",
+  "files": [
+    "formidable",
+    "lib",
+    "types"
+  ],
+  "scripts": {
+    "build": "npm run imba:build && npm run imba:build:temp && npm run ts:build",
+    "imba:build": "imbac src --output=lib --platform=node --format=cjs --clean",
+    "imba:build:temp": "imbac src --output=.temp --platform=node --clean",
+    "imba:watch": "imbac -w src --output=lib --platform=node --format=cjs --clean",
+    "ts:build": "tsc",
+    "ts:watch": "tsc -w",
+    "test": "jest --roots test",
+    "test:watch": "jest --watchAll --roots test"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "@types/node": "^16.11.7",
+    "imba": "^2.0.0-alpha.186",
+    "jest": "^27.3.1",
+    "typescript": "^4.4.4"
+  }
+}
