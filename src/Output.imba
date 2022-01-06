@@ -91,7 +91,7 @@ export default class Output
 	 * Write raw line.
 	 *
 	 * @param {String} line
-	 * @returs {void}
+	 * @returns {void}
 	 */
 	static def line line\String
 		console.log line
@@ -100,7 +100,7 @@ export default class Output
 	 * Write success line.
 	 *
 	 * @param {String} line
-	 * @returs {void}
+	 * @returns {void}
 	 */
 	static def success line\String
 		Output.write "<fg:green>{line}</fg:green>"
@@ -109,7 +109,7 @@ export default class Output
 	 * Write error line.
 	 *
 	 * @param {String} line
-	 * @returs {void}
+	 * @returns {void}
 	 */
 	static def error line\String
 		console.log ''

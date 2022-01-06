@@ -23,14 +23,14 @@ export default class Output {
          * Write raw line.
          *
          * @param {String} line
-         * @returs {void}
+         * @returns {void}
          */
     /**
     *
          * Write raw line.
          *
          * @param {String} line
-         * @returs {void}
+         * @returns {void}
          
     @param {String} line
     */
@@ -39,14 +39,14 @@ export default class Output {
          * Write success line.
          *
          * @param {String} line
-         * @returs {void}
+         * @returns {void}
          */
     /**
     *
          * Write success line.
          *
          * @param {String} line
-         * @returs {void}
+         * @returns {void}
          
     @param {String} line
     */
@@ -55,14 +55,14 @@ export default class Output {
          * Write error line.
          *
          * @param {String} line
-         * @returs {void}
+         * @returns {void}
          */
     /**
     *
          * Write error line.
          *
          * @param {String} line
-         * @returs {void}
+         * @returns {void}
          
     @param {String} line
     */
