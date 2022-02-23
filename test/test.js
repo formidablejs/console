@@ -5,10 +5,10 @@ describe('Test CLI', () => {
     const cli = join(process.cwd(), 'test', 'cli', 'app.js')
 
     it('returns help', () => {
-        const help = spawnSync('node', [cli])
+        const help = spawnSync('node', [cli, '--no-ansi'])
 
         const output = help.stdout.toString()
         
-        expect(output).toContain("Display this application version")
+        expect(output).toContain("Console App 1.0")
     })
 })
