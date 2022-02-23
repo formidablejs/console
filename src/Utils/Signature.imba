@@ -79,7 +79,7 @@ export default class Signature
 			const expectedType = command._incoming.args[position].type
 			const typeReceived = !isNaN(argument) ? Number : String
 
-			if expectedType.name !== typeReceived.name
+			if expectedType !== 'any' && expectedType.name !== typeReceived.name
 				const name = command._incoming.args[position].name
 
 				command.error "Got {typeReceived.name} to \"{name}\" argument, expected {expectedType.name}"
@@ -115,7 +115,7 @@ export default class Signature
 			catch
 				typeReceived = String
 
-			if expectedType !== typeReceived
+			if expectedType !== 'any' && expectedType !== typeReceived
 				const name = command._incoming.opts[position].name
 
 				command.error "Got {typeReceived.name} to \"{name}\" option, expected {expectedType.name}"
