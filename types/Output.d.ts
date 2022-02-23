@@ -66,5 +66,5 @@ export default class Output {
          
     @param {String} line
     */
-    static error(line: string): never;
+    static error(line: string): void;
 }

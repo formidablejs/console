@@ -2,7 +2,7 @@ export default class Signature {
     /**
     @param {Command} command
     */
-    static raw(command: any): {
+    static raw(command: Command): {
         position: number;
         name: any;
         default: any;
@@ -19,24 +19,24 @@ export default class Signature {
     @param {String} name
     @param {any} default
     */
-    static get(command: any, type: string, name: string, default$: any): any;
+    static get(command: Command, type: string, name: string, default$: any): any;
     /**
     @param {Command} command
     @param {CommandOptions} options
     */
-    static checkRequiredArguments(command: any, options: any): any;
+    static checkRequiredArguments(command: Command, options: CommandOptions): any;
     /**
     @param {Command} command
     @param {CommandOptions} options
     */
-    static resolveArguments(command: any, options: any): any;
+    static resolveArguments(command: Command, options: CommandOptions): any;
     /**
     @param {Command} command
     @param {CommandOptions} options
     */
-    static resolveOptions(command: any, options: any): any;
+    static resolveOptions(command: Command, options: CommandOptions): any;
     /**
     @param {Command} command
     */
-    static checkRequiredOptions(command: any): any;
+    static checkRequiredOptions(command: Command): any;
 }

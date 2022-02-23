@@ -102,7 +102,7 @@ export default class Command {
          * @returns {CommandArgument[]}
          
     */
-    args(): any[];
+    args(): CommandArgument[];
     /**
          * Get registered options.
          *
@@ -115,7 +115,7 @@ export default class Command {
          * @returns {CommandOption[]}
          
     */
-    opts(): any[];
+    opts(): CommandOption[];
     /**
          * Write error message.
          *
@@ -214,7 +214,7 @@ export default class Command {
     @param {String} name
     @param {any} default
     */
-    argument(name: string, default$?: any): any;
+    argument(name: string, default$?: any): mixed;
     /**
          * Get incoming option.
          *
@@ -233,7 +233,7 @@ export default class Command {
     @param {String} name
     @param {any} default
     */
-    option(name: string, default$?: any): any;
+    option(name: string, default$?: any): mixed;
     /**
          * Execute the console command.
          *
@@ -246,7 +246,7 @@ export default class Command {
          * @returns {mixed}
          
     */
-    handle(): any;
+    handle(): mixed;
     /**
          * Run console command handler.
          *
@@ -260,7 +260,7 @@ export default class Command {
          
     @param {CommandOptions} options
     */
-    run(options: any): any;
+    run(options: CommandOptions): mixed;
     [Ψ__init__]($$?: any): void;
 }
 declare const Ψ__init__: unique symbol;

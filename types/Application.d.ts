@@ -80,7 +80,7 @@ export default class Application {
          * @returns {CommandOptions}
          
     */
-    options(...args: any[]): any;
+    options(...args: any[]): CommandOptions;
     /**
     @param {String|null} signature
     */
