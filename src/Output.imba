@@ -3,6 +3,8 @@ import { Transform } from 'stream'
 
 export default class Output
 
+	static prop noAnsi\Boolean = false
+
 	static def table array\Array, results = ''
 		const transform = new Transform {
 			transform: do(chunk, enc, cb) cb(null, chunk)
@@ -85,7 +87,7 @@ export default class Output
 		/** underline text. */
 		line = line.replace /<u>([\s\S]*?)<\/u>/g, "\x1b[4m$1\x1b[0m"
 
-		console.log line
+		console.log noAnsi ? line.replace(/\u001b\[.*?m/g, '') : line
 
 	/**
 	 * Write raw line.
