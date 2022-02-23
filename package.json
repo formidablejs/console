@@ -26,6 +26,7 @@
   },
   "keywords": [],
   "devDependencies": {
+    "@types/jest": "^27.4.1",
     "@types/node": "^17.0.21",
     "imba": "^2.0.0-alpha.201",
     "jest": "^27.5.1",
