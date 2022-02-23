@@ -1,14 +1,13 @@
 const { spawnSync } = require('child_process')
-const { join } = require('path')
+const { runtime } = require('./setup/runtime')
+const { cliApp } = require('./setup/cliApp')
 
 describe('Test CLI', () => {
-    const cli = join(process.cwd(), 'test', 'cli', 'app.js')
-
     it('returns help', () => {
-        const help = spawnSync('node', [cli, '--no-ansi'])
+        const help = spawnSync(runtime(), [cliApp(), '--no-ansi'])
 
         const output = help.stdout.toString()
         
-        expect(output).toContain("Console App 1.0")
+        expect(output).toContain("Console 1.0")
     })
 })
