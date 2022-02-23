@@ -15,7 +15,7 @@ class Command {
 
         const output = app.stderr.toString() ? app.stderr.toString() : app.stdout.toString()
 
-        return output
+        return output.trim()
     }
 }
 
