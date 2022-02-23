@@ -11,7 +11,7 @@ class Command {
      * @returns {string} output
      */
     static call(name, args = []) {
-        const app = spawnSync(runtime(), [cliApp(), ...args])
+        const app = spawnSync(runtime(), [cliApp(), name, ...args])
 
         const output = app.stderr.toString() ? app.stderr.toString() : app.stdout.toString()
 
