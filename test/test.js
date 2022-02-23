@@ -1,12 +1,8 @@
-const { spawnSync } = require('child_process')
-const { runtime } = require('./setup/runtime')
-const { cliApp } = require('./setup/cliApp')
+const { Command } = require('./setup/command')
 
 describe('Test CLI', () => {
     it('returns help', () => {
-        const help = spawnSync(runtime(), [cliApp(), '--no-ansi'])
-
-        const output = help.stdout.toString()
+        const output = Command.call('', ['--no-ansi'])
         
         expect(output).toContain("Console 1.0")
     })
