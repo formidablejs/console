@@ -1,6 +1,7 @@
 import GlobalOptions from '../GlobalOptions'
 import Command from '../Command'
 import Prop from '../Prop'
+import Output from '../Output'
 
 export default class DefaultCommand < Command
 
@@ -39,8 +40,12 @@ export default class DefaultCommand < Command
 			}
 			{
 				alias: 'v'
-				name: 'version',
+				name: 'version'
 				description: 'Display this application version'
+			}
+			{
+				name: 'no-ansi'
+				description: 'Disable ANSI output'
 			}
 		]
 
@@ -58,7 +63,7 @@ export default class DefaultCommand < Command
 	 * @type {String}
 	 */
 	get signature
-		'default {?--help} {?--version}'
+		'default {?--help} {?--version} {?--no-ansi}'
 
 	/**
 	 * Command props.
@@ -69,6 +74,7 @@ export default class DefaultCommand < Command
 		{
 			help: Prop.boolean!.alias('h').default(false)
 			version: Prop.boolean!.alias('v').default(false)
+			'no-ansi': Prop.boolean!.default(false)
 		}
 
 	/**
@@ -220,6 +226,9 @@ export default class DefaultCommand < Command
 		const quiet\Boolean = self.option 'quiet', false
 		const noInteraction\Boolean = self.option 'no-interaction', false
 		const env\String|null = self.option 'env'
+		const noAnsi\Boolean = self.option 'no-ansi', false
+
+		if noAnsi then Output.noAnsi = true
 
 		if !help && !self.options.name then help = true
 
@@ -227,7 +236,7 @@ export default class DefaultCommand < Command
 			const required = self.opts!.filter(do(opt) opt.required).map do(opt) '"--' + opt.name + '"'
 
 			self.options.options.forEach do(option)
-				if !['help', 'version', 'h', 'v'].includes(option.name)
+				if !['help', 'version', 'h', 'v', 'no-ansi'].includes(option.name)
 					const expected\String = required.length > 0 ? ", expected {required.length > 1 ? 'options' : 'option'} {required.join(', ')}" : ''
 
 					self.error "Unexpected option {option.assessor}{option.name}{expected}"
@@ -265,8 +274,8 @@ export default class DefaultCommand < Command
 
 			return 0
 
-		if self.options.name && (help || quiet || noInteraction || env)
-			return new GlobalOptions help, quiet, noInteraction, env
+		if self.options.name && (help || quiet || noInteraction || env || noAnsi)
+			return new GlobalOptions help, quiet, noInteraction, env, noAnsi
 
 		if self.options.name then return 1
 
