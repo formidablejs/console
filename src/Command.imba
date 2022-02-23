@@ -181,7 +181,6 @@ export default class Command
 
 		const results = self.handle!
 
-		if !isNaN(results)
-			process.exit(Number(results))
+		if !isNaN(results) then process.exitCode = Number(results)
 		
 		results
