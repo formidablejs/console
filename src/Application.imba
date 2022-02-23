@@ -2,6 +2,7 @@ import literal from './Utils/literal'
 import Signature from './Utils/Signature'
 import DefaultCommand from './Commands/DefaultCommand'
 import Command from './Command'
+import GlobalOptions from './GlobalOptions'
 import Output from './Output'
 import type CommandOptions from './Types/CommandOptions'
 
@@ -118,15 +119,20 @@ export default class Application
 			else
 				self.accessible = Object.assign self.accessible, { [command.getName!]: command }
 
-		const options\CommandOptions = self.options!
+		let options\CommandOptions = self.options!
 
-		const results = self.defaultCommand
+		const results\GlobalOptions|number = self.defaultCommand
 			.setName(self.name)
 			.setVersion(self.version)
 			.registered(self.accessible)
 			.run(options)
 
 		if results == 0 then return
+
+		if results instanceof GlobalOptions
+			self.signature = results.incoming.join(' ')
+
+			options\CommandOptions = self.options!
 
 		const command\Command = self.accessible[options.name]
 
