@@ -109,9 +109,10 @@ export default class Signature
 			const expectedType = command._incoming.opts[position].type
 			let typeReceived
 
+			if expectedType === String
+
 			try
-				JSON.parse(option.value)
-				typeReceived = Boolean
+				typeReceived = JSON.parse(option.value).constructor
 			catch
 				typeReceived = String
 
