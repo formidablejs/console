@@ -47,6 +47,10 @@ export default class DefaultCommand < Command
 				name: 'no-ansi'
 				description: 'Disable ANSI output'
 			}
+			{
+				name: 'no-interaction'
+				description: 'Do not ask any interactive question'
+			}
 		]
 
 	/**
@@ -63,7 +67,7 @@ export default class DefaultCommand < Command
 	 * @type {String}
 	 */
 	get signature
-		'default {?--help} {?--version} {?--no-ansi}'
+		'default {?--help} {?--version} {?--no-ansi} {?--no-interaction}'
 
 	/**
 	 * Command props.
@@ -75,6 +79,7 @@ export default class DefaultCommand < Command
 			help: Prop.boolean!.alias('h').default(false)
 			version: Prop.boolean!.alias('v').default(false)
 			'no-ansi': Prop.boolean!.default(false)
+			'no-interaction': Prop.boolean!.default(false)
 		}
 
 	/**
