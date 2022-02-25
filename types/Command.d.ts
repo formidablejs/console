@@ -90,9 +90,9 @@ export default class Command {
          * @param {GlobalOptions} options
          * @returns {Command}
          
-    @param {GlobalOptions} options
+    @param {GlobalOptions} globalOptions
     */
-    setGlobalOptions(options: GlobalOptions): Command;
+    setGlobalOptions(globalOptions: GlobalOptions): Command;
     /**
          * Get command name.
          *
@@ -288,8 +288,9 @@ export default class Command {
          * @returns {mixed}
          
     @param {CommandOptions} options
+    @param {GlobalOptions|null} globalOptions
     */
-    run(options: CommandOptions): mixed;
+    run(options: CommandOptions, globalOptions: GlobalOptions | null): mixed;
     [Ψ__init__]($$?: any): void;
     [Ψ_globalOptions]: any;
 }
