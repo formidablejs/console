@@ -254,16 +254,16 @@ export default class DefaultCommand < Command
 			let length\Number = 20
 
 			Object.keys(self.commands).forEach do(command)
-				const group\String = self.commands[command].getGroup! ?? ''
-				const name\String = self.commands[command].getName!
-				const description\String = self.commands[command].description ?? ''
+				if self.commands[command].getName() !== 'default'
+					const group\String = self.commands[command].getGroup! ?? ''
+					const name\String = self.commands[command].getName!
+					const description\String = self.commands[command].description ?? ''
 
-				if name then length = name.length > length ? name.length : length
+					if name then length = name.length > length ? name.length : length
 
-				groups.push { group, name, description }
+					groups.push { group, name, description }
 
-			groups = groups.sort do(a, b)
-				a.group == '' ? -1 : a.group.localeCompare(b.group)
+			groups = groups.sort do(a, b) a.group == '' ? -1 : a.group.localeCompare(b.group)
 
 			self.displayHelp groups, length
 
