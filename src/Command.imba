@@ -69,8 +69,8 @@ export default class Command
 	 * @param {GlobalOptions} options
 	 * @returns {Command}
 	 */
-	def setGlobalOptions options\GlobalOptions
-		self.#_globalOptions = options
+	def setGlobalOptions globalOptions\GlobalOptions
+		self.#_globalOptions = globalOptions
 
 		self
 
@@ -190,8 +190,10 @@ export default class Command
 	 *
 	 * @returns {mixed}
 	 */
-	def run options\CommandOptions
+	def run options\CommandOptions, globalOptions\GlobalOptions|null
 		self.options = options
+
+		self.setGlobalOptions(globalOptions)
 
 		self._incoming.args = self.args!
 		self._incoming.opts = self.opts!

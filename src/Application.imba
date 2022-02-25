@@ -136,8 +136,5 @@ export default class Application
 
 		const command\Command = self.accessible[options.name]
 
-		if results instanceof GlobalOptions
-			command.setGlobalOptions(GlobalOptions)
-
-		command.run options
+		command.run options, results instanceof GlobalOptions ? results : undefined
 
