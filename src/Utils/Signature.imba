@@ -51,7 +51,7 @@ export default class Signature
 	static def get command\Command, type\String, name\String, default\any
 		let results = command._incoming[type].filter do(i) i.name == name
 
-		let output = results.length == 1 && results[0].value !== null ? results[0].value : (results[0]?.default !== null ? results[0]?.default : default)
+		let output = results.length == 1 && (results[0].value !== null && results[0].value !== undefined) ? results[0].value : (results[0]?.default !== null ? results[0]?.default : default)
 
 		if results.length == 1 && (results[0].prop && results[0].prop.allowsMany !== true) && Array.isArray(output) then return output.slice(-1)[0]
 
