@@ -114,7 +114,7 @@ export default class Application
 
 			const command = new registeredCommand
 
-			if command.default && command.default === undefined
+			if command.default && self.defaultCommand === undefined
 				self.defaultCommand = command
 			else
 				self.accessible = Object.assign self.accessible, { [command.getName!]: command }
