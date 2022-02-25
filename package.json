@@ -1,6 +1,6 @@
 {
   "name": "@formidablejs/console",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The Formidable Console",
   "author": "Donald Pakkies",
   "license": "MIT",
@@ -10,7 +10,6 @@
   "bugs": "https://github.com/formidablejs/console/issues",
   "repository": "https://github.com/formidablejs/console",
   "files": [
-    "formidable",
     "lib",
     "types"
   ],
