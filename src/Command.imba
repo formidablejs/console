@@ -1,10 +1,13 @@
 import Signature from './Utils/Signature'
 import Output from './Output'
+import type GlobalOptions from './GlobalOptions'
 import type CommandArgument from './Types/CommandArgument'
 import type CommandOption from './Types/CommandOption'
 import type CommandOptions from './Types/CommandOptions'
 
 export default class Command
+
+	prop #_globalOptions\GlobalOptions
 
 	/**
 	 * Register as a default command.
@@ -51,6 +54,25 @@ export default class Command
 	 * @type {Object}
 	 */
 	prop _incoming = { args: {}, opts: {} }
+
+	/**
+	 * Global options.
+	 *
+	 * @var {GlobalOptions|null}
+	 */
+	get globalOptions
+		self.#_globalOptions
+
+	/**
+	 * Set global options.
+	 *
+	 * @param {GlobalOptions} options
+	 * @returns {Command}
+	 */
+	def setGlobalOptions options\GlobalOptions
+		self.#_globalOptions = options
+
+		self
 
 	/**
 	 * Get command name.
