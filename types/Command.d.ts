@@ -65,6 +65,35 @@ export default class Command {
          * @type {Object}
          */
     /**
+         * Global options.
+         *
+         * @var {GlobalOptions|null}
+         */
+    /**
+    *
+         * Global options.
+         *
+         * @var {GlobalOptions|null}
+         
+    */
+    get globalOptions(): any;
+    /**
+         * Set global options.
+         *
+         * @param {GlobalOptions} options
+         * @returns {Command}
+         */
+    /**
+    *
+         * Set global options.
+         *
+         * @param {GlobalOptions} options
+         * @returns {Command}
+         
+    @param {GlobalOptions} options
+    */
+    setGlobalOptions(options: GlobalOptions): Command;
+    /**
          * Get command name.
          *
          * @returns {String|null}
@@ -262,6 +291,8 @@ export default class Command {
     */
     run(options: CommandOptions): mixed;
     [Ψ__init__]($$?: any): void;
+    [Ψ_globalOptions]: any;
 }
 declare const Ψ__init__: unique symbol;
+declare const Ψ_globalOptions: unique symbol;
 export {};
