@@ -262,7 +262,7 @@ export default class DefaultCommand < Command
 
 				groups.push { group, name, description }
 
-			groups = groups.sort(do(a, b) a.name.localeCompare(b.name)).sort do(a, b)
+			groups = groups.sort do(a, b)
 				a.group == '' ? -1 : a.group.localeCompare(b.group)
 
 			self.displayHelp groups, length
