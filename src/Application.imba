@@ -114,7 +114,7 @@ export default class Application
 
 			const command = new registeredCommand
 
-			if command.default
+			if command.default && command.default === undefined
 				self.defaultCommand = command
 			else
 				self.accessible = Object.assign self.accessible, { [command.getName!]: command }
@@ -135,6 +135,9 @@ export default class Application
 			options\CommandOptions = self.options!
 
 		const command\Command = self.accessible[options.name]
+
+		if results instanceof GlobalOptions
+			command.setGlobalOptions(GlobalOptions)
 
 		command.run options
 
