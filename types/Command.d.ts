@@ -279,18 +279,22 @@ export default class Command {
     /**
          * Run console command handler.
          *
+         * @param {CommandOptions} options
+         * @param {GlobalOptions|null} globalOptions
          * @returns {mixed}
          */
     /**
     *
          * Run console command handler.
          *
+         * @param {CommandOptions} options
+         * @param {GlobalOptions|null} globalOptions
          * @returns {mixed}
          
     @param {CommandOptions} options
     @param {GlobalOptions|null} globalOptions
     */
-    run(options: CommandOptions, globalOptions: GlobalOptions | null): mixed;
+    run(options: CommandOptions, globalOptions?: GlobalOptions | null): mixed;
     [Ψ__init__]($$?: any): void;
     [Ψ_globalOptions]: any;
 }
