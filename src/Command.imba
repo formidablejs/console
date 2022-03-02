@@ -188,9 +188,11 @@ export default class Command
 	/**
 	 * Run console command handler.
 	 *
+	 * @param {CommandOptions} options
+	 * @param {GlobalOptions|null} globalOptions
 	 * @returns {mixed}
 	 */
-	def run options\CommandOptions, globalOptions\GlobalOptions|null
+	def run options\CommandOptions, globalOptions\GlobalOptions|null = null
 		self.options = options
 
 		self.setGlobalOptions(globalOptions)
