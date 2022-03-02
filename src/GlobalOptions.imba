@@ -10,4 +10,4 @@ export default class GlobalOptions
 		self.noAnsi = noAnsi
 
 		self.incoming = process.argv.slice(2).filter do(arg)
-			!['--help', '-h', '--quiet', '-q', '--no-interaction', '-n', 'env', '--no-ansi'].includes arg
+			!['--help', '-h', '--quiet', '-q', '--no-interaction', '-n', '--env', '--no-ansi'].includes arg

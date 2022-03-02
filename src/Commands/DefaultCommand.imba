@@ -241,7 +241,7 @@ export default class DefaultCommand < Command
 			const required = self.opts!.filter(do(opt) opt.required).map do(opt) '"--' + opt.name + '"'
 
 			self.options.options.forEach do(option)
-				if !['help', 'version', 'h', 'v', 'no-ansi'].includes(option.name)
+				if !['help', 'h', 'quiet', 'q', 'no-interaction', 'n', 'env', 'no-ansi'].includes(option.name)
 					const expected\String = required.length > 0 ? ", expected {required.length > 1 ? 'options' : 'option'} {required.join(', ')}" : ''
 
 					self.error "Unexpected option {option.assessor}{option.name}{expected}"
