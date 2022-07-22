@@ -51,6 +51,13 @@ export default class Application
 	prop signature\String
 
 	/**
+	 * onDefaultCommand events.
+	 *
+	 * @type {Function[]|null}
+	 */
+	prop #onDefaultCommandEvents\Function[] = []
+
+	/**
 	 * Instantiate console
 	 *
 	 * @param {String} name
@@ -103,6 +110,11 @@ export default class Application
 
 		command
 
+	def onDefaultCommand callback\Function
+		self.#onDefaultCommandEvents.push callback
+
+		self
+
 	def run signature\String|null = null
 		if signature && typeof signature == 'string'
 			self.signature = signature
@@ -127,7 +139,11 @@ export default class Application
 			.registered(self.accessible)
 			.run(options)
 
-		if results == 0 then return
+		if results == 0
+			for event in self.onDefaultCommandEvents
+				event(options)
+
+			return
 
 		if results instanceof GlobalOptions
 			self.signature = results.incoming.join(' ')
