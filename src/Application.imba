@@ -140,7 +140,7 @@ export default class Application
 			.run(options)
 
 		if results == 0
-			for event in self.onDefaultCommandEvents
+			for event in self.#onDefaultCommandEvents
 				event(options)
 
 			return
