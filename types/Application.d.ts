@@ -30,6 +30,11 @@ export default class Application {
          * @type {String|null}
          */
     /**
+         * onDefaultCommand events.
+         *
+         * @type {Function[]|null}
+         */
+    /**
          * Instantiate console
          *
          * @param {String} name
@@ -82,10 +87,16 @@ export default class Application {
     */
     options(...args: any[]): CommandOptions;
     /**
+    @param {Function} callback
+    */
+    onDefaultCommand(callback: Function): Application;
+    /**
     @param {String|null} signature
     */
     run(signature?: string | null): any;
     [Ψ__init__]($$?: any): void;
+    [ΨonDefaultCommandEvents]: any;
 }
 declare const Ψ__init__: unique symbol;
+declare const ΨonDefaultCommandEvents: unique symbol;
 export {};
