@@ -291,9 +291,11 @@ export default class Command {
     @param {GlobalOptions|null} globalOptions
     */
     run(options: CommandOptions, globalOptions: GlobalOptions | null): mixed;
-    [Ψ__init__]($$?: any): void;
-    [Ψ_globalOptions]: any;
+    [$__patch__$]($$?: {}): void;
+    [$__init__$]($$?: any, deep?: boolean): void;
+    [$_globalOptions$]: any;
 }
-declare const Ψ__init__: unique symbol;
-declare const Ψ_globalOptions: unique symbol;
+declare const $__patch__$: unique symbol;
+declare const $__init__$: unique symbol;
+declare const $_globalOptions$: unique symbol;
 export {};

@@ -90,7 +90,7 @@ export default class Application {
          * @returns {CommandOptions}
          
     */
-    options(...args: any[]): CommandOptions;
+    options(): CommandOptions;
     /**
     @param {Function} callback
     */
@@ -104,11 +104,13 @@ export default class Application {
     @param {String|null} signature
     */
     run(signature?: string | null): any[];
-    [Ψ__init__]($$?: any): void;
-    [ΨapplicationEvents]: any;
-    [ΨonDefaultCommandEvents]: any;
+    [$__patch__$]($$?: {}): void;
+    [$__init__$]($$?: any, deep?: boolean): void;
+    [$applicationEvents$]: any;
+    [$onDefaultCommandEvents$]: any;
 }
-declare const Ψ__init__: unique symbol;
-declare const ΨapplicationEvents: unique symbol;
-declare const ΨonDefaultCommandEvents: unique symbol;
+declare const $__patch__$: unique symbol;
+declare const $__init__$: unique symbol;
+declare const $applicationEvents$: unique symbol;
+declare const $onDefaultCommandEvents$: unique symbol;
 export {};

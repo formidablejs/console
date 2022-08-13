@@ -67,7 +67,7 @@ export default class Output {
     @param {String} line
     */
     static error(line: string): void;
-    static [Ψ__init__](): typeof Output;
+    static [$__init__$](): typeof Output;
 }
-declare const Ψ__init__: unique symbol;
+declare const $__init__$: unique symbol;
 export {};
