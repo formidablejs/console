@@ -1,5 +1,5 @@
 export default class BooleanProp extends Prop {
-    static [Ψ__init__](): typeof BooleanProp;
+    static [$__init__$](): typeof BooleanProp;
     constructor(...args: any[]);
     type: any;
     defaultValue: any;
@@ -29,8 +29,10 @@ export default class BooleanProp extends Prop {
     @param {Boolean} value
     */
     default(value: boolean): BooleanProp;
-    [Ψ__init__]($$?: any, ...args: any[]): void;
+    [$__patch__$]($$?: {}): void;
+    [$__init__$]($$?: any, deep?: boolean, ...args: any[]): void;
 }
 import Prop from "./Prop";
-declare const Ψ__init__: unique symbol;
+declare const $__patch__$: unique symbol;
+declare const $__init__$: unique symbol;
 export {};

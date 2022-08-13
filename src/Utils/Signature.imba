@@ -6,7 +6,7 @@ import type CommandOption from '../Types/CommandOption'
 export default class Signature
 
 	static def raw command\Command
-		const args\String[] = command.signature.match(/\{(.*?)\}/g)
+		const args\String[] = command.signature.match(/\{(.*?)\}/g) || []
 
 		const filtered = []
 

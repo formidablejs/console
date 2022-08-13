@@ -1,5 +1,5 @@
 export default class DefaultCommand extends Command {
-    static [Ψ__init__](): typeof DefaultCommand;
+    static [$__init__$](): typeof DefaultCommand;
     constructor(...args: any[]);
     commands: any;
     name: any;
@@ -90,8 +90,10 @@ export default class DefaultCommand extends Command {
     */
     displayCommandHelp(command: Command): void;
     displayVersion(): void;
-    [Ψ__init__]($$?: any, ...args: any[]): void;
+    [$__patch__$]($$?: {}): void;
+    [$__init__$]($$?: any, deep?: boolean, ...args: any[]): void;
 }
 import Command from "../Command";
-declare const Ψ__init__: unique symbol;
+declare const $__patch__$: unique symbol;
+declare const $__init__$: unique symbol;
 export {};
