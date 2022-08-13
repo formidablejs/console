@@ -30,6 +30,11 @@ export default class Application {
          * @type {String|null}
          */
     /**
+         * Application events.
+         *
+         * @type {Function[]|null}
+         */
+    /**
          * onDefaultCommand events.
          *
          * @type {Function[]|null}
@@ -91,12 +96,19 @@ export default class Application {
     */
     onDefaultCommand(callback: Function): Application;
     /**
+    @param {String} event
+    @param {Function} callback
+    */
+    onEvent(event: string, callback: Function): Application;
+    /**
     @param {String|null} signature
     */
-    run(signature?: string | null): any;
+    run(signature?: string | null): any[];
     [Ψ__init__]($$?: any): void;
+    [ΨapplicationEvents]: any;
     [ΨonDefaultCommandEvents]: any;
 }
 declare const Ψ__init__: unique symbol;
+declare const ΨapplicationEvents: unique symbol;
 declare const ΨonDefaultCommandEvents: unique symbol;
 export {};
