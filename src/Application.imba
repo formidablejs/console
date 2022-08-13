@@ -51,6 +51,13 @@ export default class Application
 	prop signature\String
 
 	/**
+	 * Application events.
+	 *
+	 * @type {Function[]|null}
+	 */
+	prop #applicationEvents\Function[] = []
+
+	/**
 	 * onDefaultCommand events.
 	 *
 	 * @type {Function[]|null}
@@ -115,6 +122,11 @@ export default class Application
 
 		self
 
+	def onEvent event\String, callback\Function
+		self.#applicationEvents.push { event, callback }
+
+		self
+
 	def run signature\String|null = null
 		if signature && typeof signature == 'string'
 			self.signature = signature
@@ -145,6 +157,10 @@ export default class Application
 
 			return
 
+		if options.name
+			for registered in self.#applicationEvents.filter(do(event) event.event == "pre-{options.name}")
+				registered.callback(options)
+
 		if results instanceof GlobalOptions
 			self.signature = results.incoming.join(' ')
 
@@ -154,3 +170,6 @@ export default class Application
 
 		command.run options, results instanceof GlobalOptions ? results : undefined
 
+		if options.name
+			for registered in self.#applicationEvents.filter(do(event) event.event == options.name)
+				registered.callback(options, results)
