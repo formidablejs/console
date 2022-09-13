@@ -2,6 +2,8 @@ import GlobalOptions from '../GlobalOptions'
 import Command from '../Command'
 import Prop from '../Prop'
 import Output from '../Output'
+import Similar from '../Utils/Similar'
+import Prompt from '../Utils/Prompt'
 
 export default class DefaultCommand < Command
 
@@ -225,7 +227,7 @@ export default class DefaultCommand < Command
 	 * @returns {mixed}
 	 */
 	def handle
-		const command\Command = self.commands[self.options.name]
+		let command\Command = self.commands[self.options.name]
 
 		let help\Boolean = self.option 'help'
 		const quiet\Boolean = self.option 'quiet', false
@@ -237,6 +239,27 @@ export default class DefaultCommand < Command
 
 		if !help && !self.options.name then help = true
 
+		if !command && self.options.name
+			const all = Object.keys(self.commands)
+
+			if self.option('no-interaction') != true
+				let asked = false
+
+				for c in all
+					if Similar(self.options.name, c) >= 70 && asked == false
+						asked = true
+
+						const response = await Prompt("Did you mean \"{c}\"?")
+
+						if response == true
+							command = self.commands[c]
+							options.name = c
+
+						break
+
+			if !command
+				self.error "Command \"{self.options.name}\" is not defined."
+
 		if !command && self.options.options.length > 0
 			const required = self.opts!.filter(do(opt) opt.required).map do(opt) '"--' + opt.name + '"'
 
@@ -245,9 +268,6 @@ export default class DefaultCommand < Command
 					const expected\String = required.length > 0 ? ", expected {required.length > 1 ? 'options' : 'option'} {required.join(', ')}" : ''
 
 					self.error "Unexpected option {option.assessor}{option.name}{expected}"
-
-		if !command && self.options.name
-			self.error "Command \"{self.options.name}\" is not defined."
 
 		if self.option('version')
 			self.displayVersion!

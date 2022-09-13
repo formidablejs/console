@@ -145,7 +145,7 @@ export default class Application
 
 		let options\CommandOptions = self.options!
 
-		const results\GlobalOptions|number = self.defaultCommand
+		const results\GlobalOptions|number = await self.defaultCommand
 			.setName(self.name)
 			.setVersion(self.version)
 			.registered(self.accessible)
