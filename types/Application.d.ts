@@ -103,7 +103,7 @@ export default class Application {
     /**
     @param {String|null} signature
     */
-    run(signature?: string | null): any[];
+    run(signature?: string | null): Promise<any[]>;
     [$__patch__$]($$?: {}): void;
     [$__init__$]($$?: any, deep?: boolean): void;
     [$applicationEvents$]: any;
