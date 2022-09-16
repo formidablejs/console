@@ -93,27 +93,29 @@ export default class Application
 	def options
 		const args\String[] = signature ? signature.split ' ' : process.argv.slice 2
 
-		const command\CommandOptions = { name: null, arguments: [], options: [] }
+		const command\CommandOptions = { name: null, arguments: [], options: [], recieved: '' }
 
 		for argument, position in args
 			if argument.startsWith '-'
-				const name = argument.split('=')[0].slice(argument.startsWith('--') ? 2 : 1)
-				const value = argument.includes('=') ? argument.split('=')[1] : true
+				const name     = argument.split('=')[0].slice(argument.startsWith('--') ? 2 : 1)
+				const value    = argument.includes('=') ? argument.split('=')[1] : true
 				const assessor = argument.startsWith('--') ? '--' : '-'
 
 				if command.options.some(do(option) option.name == name) && ![true, false].includes(literal(value))
 					command.options.forEach do(option, position)
 						const previous\String = command.options[position].value
 
-						command.options[position].value = Array.isArray(previous) ? previous.concat([value]) : [previous, value]
+						command.options[position].value    = Array.isArray(previous) ? previous.concat([value]) : [previous, value]
+						command.options[position].received = argument
 
 				else
-					command.options.push { name, value, assessor }
+					command.options.push { name, value, assessor, received: argument }
 			else
 				if position == 0
 					command.name = argument.trim!
 				else
 					command.arguments.push argument
+					command.received = argument
 
 		command
 

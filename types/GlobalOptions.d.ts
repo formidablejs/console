@@ -6,13 +6,14 @@ export default class GlobalOptions {
     @param {String} env
     @param {Boolean} noAnsi
     */
-    constructor(help?: boolean, quiet?: boolean, noInteraction?: boolean, env?: string, noAnsi?: boolean);
+    constructor(help?: boolean, quiet?: boolean, noInteraction?: boolean, env?: string, noAnsi?: boolean, verbose?: number);
     incoming: string[];
     help: boolean;
     quiet: boolean;
     noInteraction: boolean;
     env: string;
     noAnsi: boolean;
+    verbose: number;
     [$__patch__$]($$?: {}): void;
     [$__init__$]($$?: any, deep?: boolean): void;
 }

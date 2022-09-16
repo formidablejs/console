@@ -90,7 +90,13 @@ export default class Signature
 
 	static def resolveOptions command\Command, options\CommandOptions
 		options.options.forEach do(option)
-			let position = command._incoming.opts.map do(opt, position) opt[option.name.length > 1 ? 'name' : 'alias'] == option.name ? position : null
+			let position = command._incoming.opts.map do(opt, position)
+				let results = opt[option.name.length > 1 ? 'name' : 'alias'] == option.name ? position : null
+
+				if results === null && opt.prop.propAliasOptions && opt.prop.propAliasOptions.includes(option.name)
+					results = position
+
+				results
 
 			position = position.filter do(i) i !== null
 
@@ -132,6 +138,7 @@ export default class Signature
 				if typeof results == 'string' then command.error results
 
 			command._incoming.opts[position].value = value
+			command._incoming.opts[position].received = option.received
 
 	static def checkRequiredOptions command\Command
 		const requiredOptions = command._incoming.opts.filter do(option\CommandOption)
