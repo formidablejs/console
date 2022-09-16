@@ -41,7 +41,7 @@ export default class DefaultCommand < Command
 				description: 'Display help for the given command. When no command is given display help for the <fg:green>list</fg:green> command'
 			}
 			{
-				alias: 'v'
+				alias: 'V'
 				name: 'version'
 				description: 'Display this application version'
 			}
@@ -52,6 +52,11 @@ export default class DefaultCommand < Command
 			{
 				name: 'no-interaction'
 				description: 'Do not ask any interactive question'
+			}
+			{
+				alias: { v: 1, vv: 2, vvv: 3 }
+				name: 'verbose'
+				description: 'Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug'
 			}
 		]
 
@@ -69,7 +74,7 @@ export default class DefaultCommand < Command
 	 * @type {String}
 	 */
 	get signature
-		'default {?--help} {?--version} {?--no-ansi} {?--no-interaction}'
+		'default {?--help} {?--version} {?--no-ansi} {?--no-interaction} {?--verbose}'
 
 	/**
 	 * Command props.
@@ -79,7 +84,8 @@ export default class DefaultCommand < Command
 	get props
 		{
 			help: Prop.boolean!.alias('h').default(false)
-			version: Prop.boolean!.alias('v').default(false)
+			version: Prop.boolean!.alias('V').default(false)
+			verbose: Prop.boolean!.alias({v: 1, vv: 2, vvv: 3}).default(true)
 			'no-ansi': Prop.boolean!.default(false)
 			'no-interaction': Prop.boolean!.default(false)
 		}
@@ -121,7 +127,12 @@ export default class DefaultCommand < Command
 		let display = []
 
 		self.helpOptions.forEach do(option)
-			const name = (option.alias ? "-{option.alias}, " : '    ') + ("--{option.name}") + (option.type && option.type == String ? "[={option.name.toUpperCase!}]" : '')
+			let alias = option.alias
+
+			if typeof option.alias === 'object' && !Array.isArray(option.alias) && option.alias
+				alias = Object.keys(option.alias).join('|')
+
+			const name = (option.alias ? "-{alias}, " : '    ') + ("--{option.name}") + (option.type && option.type == String ? "[={option.name.toUpperCase!}]" : '')
 
 			if name then length = name.length > length ? name.length : length
 
@@ -183,7 +194,12 @@ export default class DefaultCommand < Command
 		options.forEach do(option)
 			const allowed = Array.isArray(option.allowed) ? option.allowed.join('|') : null
 
-			const name = (option.alias ? "-{option.alias}, " : '    ') + ("--{option.name}") + (option.type && option.type == String ? "{(allowed ? "=[{allowed}]" : "[={option.name.toUpperCase!}]")}" : '')
+			let alias = option.alias
+
+			if typeof option.alias === 'object' && !Array.isArray(option.alias) && option.alias
+				alias = Object.keys(option.alias).join('|')
+
+			const name = (option.alias ? "-{alias}, " : '    ') + ("--{option.name}") + (option.type && option.type == String ? "{(allowed ? "=[{allowed}]" : "[={option.name.toUpperCase!}]")}" : '')
 
 			if name then length = name.length > length ? name.length : length
 
@@ -229,11 +245,19 @@ export default class DefaultCommand < Command
 	def handle
 		let command\Command = self.commands[self.options.name]
 
-		let help\Boolean = self.option 'help'
-		const quiet\Boolean = self.option 'quiet', false
+		let   help\Boolean          = self.option 'help'
+		const quiet\Boolean         = self.option 'quiet', false
 		const noInteraction\Boolean = self.option 'no-interaction', false
-		const env\String|null = self.option 'env'
-		const noAnsi\Boolean = self.option 'no-ansi', false
+		const env\String|null       = self.option 'env'
+		const noAnsi\Boolean        = self.option 'no-ansi', false
+		let   verbose\Number        = 1
+
+		const verboseOption = this._incoming.opts.filter(do(opt)
+			opt.name == 'verbose'
+		)[0]
+
+		if verboseOption && verboseOption.received
+			verbose = verboseOption.received.length - 1
 
 		if noAnsi then Output.noAnsi = true
 
@@ -264,7 +288,7 @@ export default class DefaultCommand < Command
 			const required = self.opts!.filter(do(opt) opt.required).map do(opt) '"--' + opt.name + '"'
 
 			self.options.options.forEach do(option)
-				if !['help', 'version', 'h', 'v', 'no-ansi'].includes(option.name)
+				if !['help', 'version', 'h', 'V', 'v', 'vv', 'vvv', 'verbose', 'no-ansi'].includes(option.name)
 					const expected\String = required.length > 0 ? ", expected {required.length > 1 ? 'options' : 'option'} {required.join(', ')}" : ''
 
 					self.error "Unexpected option {option.assessor}{option.name}{expected}"
@@ -299,8 +323,8 @@ export default class DefaultCommand < Command
 
 			return 0
 
-		if self.options.name && (help || quiet || noInteraction || env || noAnsi)
-			return new GlobalOptions help, quiet, noInteraction, env, noAnsi
+		if self.options.name && (help || quiet || noInteraction || env || noAnsi || verbose)
+			return new GlobalOptions help, quiet, noInteraction, env, noAnsi, verbose
 
 		if self.options.name then return 1
 
