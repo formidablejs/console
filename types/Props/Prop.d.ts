@@ -3,6 +3,8 @@ export default class Prop {
     required: any;
     propDescription: any;
     propAlias: any;
+    propAliasOptions: any;
+    propAliasDefaults: any;
     /**
          * Whether prop is required or not.
          *
@@ -17,6 +19,16 @@ export default class Prop {
          * Prop alias.
          *
          * @type {String}
+         */
+    /**
+         * Prop alias options.
+         *
+         * @type {Array}
+         */
+    /**
+         * Prop alias defaults.
+         *
+         * @type {Array}
          */
     /**
          * Mark as nullable.
@@ -49,17 +61,17 @@ export default class Prop {
     /**
          * Set prop alias.
          *
-         * @param {String} alias
+         * @param {String|Array} alias
          */
     /**
     *
          * Set prop alias.
          *
-         * @param {String} alias
+         * @param {String|Array} alias
          
-    @param {String} alias
+    @param {String|Array} alias
     */
-    alias(alias: string): Prop;
+    alias(alias: string | any[]): Prop;
     [$__patch__$]($$?: {}): void;
     [$__init__$]($$?: any, deep?: boolean): void;
 }
