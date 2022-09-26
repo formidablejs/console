@@ -178,7 +178,7 @@ export default class Application
 		const command\Command = self.accessible[options.name]
 
 		if self.#silentExit
-			command.#silentExit = true
+			command.silentExit = true
 
 		await command.run options, results instanceof GlobalOptions ? results : undefined
 

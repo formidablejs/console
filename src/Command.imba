@@ -14,7 +14,7 @@ export default class Command
 	 *
 	 * @type {Boolean|null}
 	 */
-	prop #silentExit\Boolean = false
+	prop silentExit\Boolean = false
 
 	/**
 	 * Register as a default command.
@@ -226,5 +226,5 @@ export default class Command
 		if !isNaN(exitCode)
 			process.exitCode = Number(exitCode)
 
-		if !#silentExit
+		if !silentExit
 			process.exit(process.exitCode ?? 0)
