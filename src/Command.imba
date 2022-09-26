@@ -10,6 +10,13 @@ export default class Command
 	prop #_globalOptions\GlobalOptions
 
 	/**
+	 * Exit protocol.
+	 *
+	 * @type {Boolean|null}
+	 */
+	prop silentExit\Boolean = false
+
+	/**
 	 * Register as a default command.
 	 *
 	 * @type {Boolean|null}
@@ -203,8 +210,21 @@ export default class Command
 		Signature.resolveOptions this, options
 		Signature.checkRequiredOptions this
 
-		const results = self.handle!
+		const results = await self.handle!
 
 		if !isNaN(results) then process.exitCode = Number(results)
 
 		results
+
+	/**
+	 * Exit command.
+	 *
+	 * @param {Number|null} exitCode
+	 * @returns {mixed}
+	 */
+	def exit exitCode\number = null
+		if !isNaN(exitCode)
+			process.exitCode = Number(exitCode)
+
+		if !silentExit
+			process.exit(process.exitCode ?? 0)

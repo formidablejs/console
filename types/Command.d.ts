@@ -1,7 +1,13 @@
 export default class Command {
     constructor($$?: any);
+    silentExit: any;
     options: any;
     _incoming: any;
+    /**
+         * Exit protocol.
+         *
+         * @type {Boolean|null}
+         */
     /**
          * Register as a default command.
          *
@@ -291,6 +297,22 @@ export default class Command {
     @param {GlobalOptions|null} globalOptions
     */
     run(options: CommandOptions, globalOptions: GlobalOptions | null): mixed;
+    /**
+         * Exit command.
+         *
+         * @param {Number|null} exitCode
+         * @returns {mixed}
+         */
+    /**
+    *
+         * Exit command.
+         *
+         * @param {Number|null} exitCode
+         * @returns {mixed}
+         
+    @param {number} exitCode
+    */
+    exit(exitCode?: number | null): mixed;
     [$__patch__$]($$?: {}): void;
     [$__init__$]($$?: any, deep?: boolean): void;
     [$_globalOptions$]: any;
