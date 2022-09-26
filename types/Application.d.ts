@@ -10,6 +10,12 @@ export default class Application {
          * @type {DefaultCommand}
          */
     /**
+         * Exit protocol.
+         *
+         * @type {Boolean}
+        prop #silentExit\Boolean = false
+    
+        \/\**
          * Accessible commands.
          *
          * @type {Object}
@@ -108,9 +114,11 @@ export default class Application {
     [$__init__$]($$?: any, deep?: boolean): void;
     [$applicationEvents$]: any;
     [$onDefaultCommandEvents$]: any;
+    [$silentExit$]: boolean;
 }
 declare const $__patch__$: unique symbol;
 declare const $__init__$: unique symbol;
 declare const $applicationEvents$: unique symbol;
 declare const $onDefaultCommandEvents$: unique symbol;
+declare const $silentExit$: unique symbol;
 export {};
