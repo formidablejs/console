@@ -1,5 +1,6 @@
 export default class Command {
     constructor($$?: any);
+    silentExit: any;
     options: any;
     _incoming: any;
     /**
@@ -315,10 +316,8 @@ export default class Command {
     [$__patch__$]($$?: {}): void;
     [$__init__$]($$?: any, deep?: boolean): void;
     [$_globalOptions$]: any;
-    [$silentExit$]: any;
 }
 declare const $__patch__$: unique symbol;
 declare const $__init__$: unique symbol;
 declare const $_globalOptions$: unique symbol;
-declare const $silentExit$: unique symbol;
 export {};
