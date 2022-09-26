@@ -171,7 +171,8 @@ export default class Application
 				registered.callback(options)
 
 		if results instanceof GlobalOptions
-			self.signature = results.incoming.join(' ')
+			if !self.signature
+				self.signature = results.incoming.join(' ')
 
 			options\CommandOptions = self.options!
 
