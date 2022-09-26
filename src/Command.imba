@@ -210,7 +210,7 @@ export default class Command
 		Signature.resolveOptions this, options
 		Signature.checkRequiredOptions this
 
-		const results = self.handle!
+		const results = await self.handle!
 
 		if !isNaN(results) then process.exitCode = Number(results)
 
@@ -226,6 +226,5 @@ export default class Command
 		if !isNaN(exitCode)
 			process.exitCode = Number(exitCode)
 
-		if #silentExit then return
-
-		process.exit(process.exitCode ?? 0)
+		if !#silentExit
+			process.exit(process.exitCode ?? 0)

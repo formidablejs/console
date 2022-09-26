@@ -180,7 +180,7 @@ export default class Application
 		if self.#silentExit
 			command.#silentExit = true
 
-		command.run options, results instanceof GlobalOptions ? results : undefined
+		await command.run options, results instanceof GlobalOptions ? results : undefined
 
 		if options.name
 			for registered in self.#applicationEvents.filter(do(event) event.event == options.name)
