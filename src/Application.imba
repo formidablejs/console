@@ -23,6 +23,12 @@ export default class Application
 	prop defaultCommand\DefaultCommand
 
 	/**
+	 * Exit protocol.
+	 *
+	 * @type {Boolean}
+	prop #silentExit\Boolean = false
+
+	/**
 	 * Accessible commands.
 	 *
 	 * @type {Object}
@@ -131,6 +137,7 @@ export default class Application
 
 	def run signature\String|null = null
 		if signature && typeof signature == 'string'
+			self.#silentExit = true
 			self.signature = signature
 
 		self.register DefaultCommand
@@ -169,6 +176,9 @@ export default class Application
 			options\CommandOptions = self.options!
 
 		const command\Command = self.accessible[options.name]
+
+		if self.#silentExit
+			command.#silentExit = true
 
 		command.run options, results instanceof GlobalOptions ? results : undefined
 
