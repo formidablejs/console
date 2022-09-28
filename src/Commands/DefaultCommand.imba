@@ -299,6 +299,7 @@ export default class DefaultCommand < Command
 			return 0
 
 		if !self.options.name && help
+			let all\Array = []
 			let groups\Array = []
 			let length\Number = 20
 
@@ -310,11 +311,12 @@ export default class DefaultCommand < Command
 
 					if name then length = name.length > length ? name.length : length
 
-					groups.push { group, name, description }
+					group == '' ? (all.push { group, name, description }) : groups.push { group, name, description }
 
-			groups = groups.sort do(a, b) a.group == '' ? -1 : a.group.localeCompare(b.group)
+			all = all.sort do(a, b) a.name.localeCompare(b.name)
+			groups = groups.sort do(a, b) a.name.localeCompare(b.name)
 
-			self.displayHelp groups, length
+			self.displayHelp all.concat(groups), length
 
 			return 0
 
