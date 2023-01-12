@@ -6,14 +6,14 @@ import type CommandOption from '../Types/CommandOption'
 export default class Signature
 
 	static def raw command\Command
-		const args\String[] = command.signature.match(/\{(.*?)\}/g) || []
+		const args\string[] = command.signature.match(/\{(.*?)\}/g) || []
 
 		const filtered = []
 
 		for argument, position in args
-			let name\String = argument.split(':')[0].slice(1).trim!
-			const description\String = argument.includes(':') ? argument.substring(argument.indexOf(':')).slice(1).slice(0, -1).trim! : null
-			const required\Boolean = !name.startsWith '?'
+			let name\string = argument.split(':')[0].slice(1).trim!
+			const description\string = argument.includes(':') ? argument.substring(argument.indexOf(':')).slice(1).slice(0, -1).trim! : null
+			const required\boolean = !name.startsWith '?'
 			let type\any = name.includes('=') ? String : Boolean
 			let flag = 'argument'
 
@@ -48,7 +48,7 @@ export default class Signature
 
 		filtered
 
-	static def get command\Command, type\String, name\String, default\any
+	static def get command\Command, type\string, name\string, default\any
 		let results = command._incoming[type].filter do(i) i.name == name
 
 		let output = results.length == 1 && (results[0].value !== null && results[0].value !== undefined) ? results[0].value : (results[0]?.default !== null ? results[0]?.default : default)

@@ -1,8 +1,8 @@
 export default class GlobalOptions
 
-	prop incoming\String[]
+	prop incoming\string[]
 
-	def constructor help\Boolean = false, quiet\Boolean = false, noInteraction\Boolean = false, env\String = null, noAnsi\Boolean = false, verbose = 1
+	def constructor help\boolean = false, quiet\boolean = false, noInteraction\boolean = false, env\string = null, noAnsi\boolean = false, verbose = 1
 		self.help = help
 		self.quiet = quiet
 		self.noInteraction = noInteraction

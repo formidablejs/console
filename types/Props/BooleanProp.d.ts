@@ -4,29 +4,8 @@ export default class BooleanProp extends Prop {
     type: any;
     defaultValue: any;
     /**
-         * Boolean prop type.
-         *
-         * @type {BooleanConstructor}
-         */
-    /**
-         * Default value.
-         *
-         * @type {Boolean}
-         */
-    /**
-         * Set default value.
-         *
-         * @param {Boolean} value
-         * @returns {BooleanProp}
-         */
-    /**
-    *
-         * Set default value.
-         *
-         * @param {Boolean} value
-         * @returns {BooleanProp}
-         
-    @param {Boolean} value
+    @param {boolean} value
+    @returns { BooleanProp }
     */
     default(value: boolean): BooleanProp;
     [$__patch__$]($$?: {}): void;

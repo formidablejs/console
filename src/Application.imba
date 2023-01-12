@@ -8,96 +8,47 @@ import type CommandOptions from './Types/CommandOptions'
 
 export default class Application
 
-	/**
-	 * A list of registered commands.
-	 *
-	 * @type {Array}
-	 */
+	# A list of registered commands.
 	prop commands\Array = []
 
-	/**
-	 * Default command.
-	 *
-	 * @type {DefaultCommand}
-	 */
+	# Default command.
 	prop defaultCommand\DefaultCommand
 
-	/**
-	 * Exit protocol.
-	 *
-	 * @type {Boolean}
-	prop #silentExit\Boolean = false
+	# Exit protocol.
+	prop #silentExit\boolean = false
 
-	/**
-	 * Accessible commands.
-	 *
-	 * @type {Object}
-	 */
-	prop accessible\Object = {}
+	# Accessible commands.
+	prop accessible\object = {}
 
-	/**
-	 * Application name
-	 *
-	 * @type {String}
-	 */
-	prop name\String
+	# Application name.
+	prop name\string
 
-	/**
-	 * Application version (semver).
-	 *
-	 * @type {String}
-	 */
-	prop version\String
+	# Application version (semver).
+	prop version\string
 
-	/**
-	 * Custom signature.
-	 *
-	 * @type {String|null}
-	 */
-	prop signature\String
+	# Custom signature.
+	prop signature\string
 
-	/**
-	 * Application events.
-	 *
-	 * @type {Function[]|null}
-	 */
+	# Application events.
 	prop #applicationEvents\Function[] = []
 
-	/**
-	 * onDefaultCommand events.
-	 *
-	 * @type {Function[]|null}
-	 */
+	# onDefaultCommand events.
 	prop #onDefaultCommandEvents\Function[] = []
 
-	/**
-	 * Instantiate console
-	 *
-	 * @param {String} name
-	 * @param {String} version
-	 */
-	def constructor name\String, version\String|null = '1.0'
+	# Instantiate console.
+	def constructor name\string, version\string|null = '1.0'
 		self.name = name
 		self.version = version
 
-	/**
-	 * Register a new command.
-	 *
-	 * @param {Function} command
-	 * @returns {Application}
-	 */
-	def register command\Function
+	# Register a new command.
+	def register\Application command\Function
 		self.commands.push command
 
 		self
 
-	/**
-	 * Get incoming command options.
-	 *
-	 * @returns {CommandOptions}
-	 */
-	def options
-		const args\String[] = signature ? signature.split ' ' : process.argv.slice 2
+	# Get incoming command options.
+	def options\CommandOptions
+		const args\string[] = signature ? signature.split ' ' : process.argv.slice 2
 
 		const command\CommandOptions = { name: null, arguments: [], options: [], recieved: '' }
 
@@ -109,7 +60,7 @@ export default class Application
 
 				if command.options.some(do(option) option.name == name) && ![true, false].includes(literal(value))
 					command.options.forEach do(option, position)
-						const previous\String = command.options[position].value
+						const previous\string = command.options[position].value
 
 						command.options[position].value    = Array.isArray(previous) ? previous.concat([value]) : [previous, value]
 						command.options[position].received = argument
@@ -125,17 +76,17 @@ export default class Application
 
 		command
 
-	def onDefaultCommand callback\Function
+	def onDefaultCommand\Application callback\Function
 		self.#onDefaultCommandEvents.push callback
 
 		self
 
-	def onEvent event\String, callback\Function
+	def onEvent\Application event\string, callback\Function
 		self.#applicationEvents.push { event, callback }
 
 		self
 
-	def run signature\String|null = null
+	def run signature\string|null = null
 		if signature && typeof signature == 'string'
 			self.#silentExit = true
 			self.signature = signature

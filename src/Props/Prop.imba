@@ -1,66 +1,34 @@
 export default class Prop
 
-	/**
-	 * Whether prop is required or not.
-	 *
-	 * @type {Boolean}
-	 */
-	prop required\Boolean
+	# Whether prop is required or not.
+	prop required\boolean
 
-	/**
-	 * Prop description.
-	 *
-	 * @type {String}
-	 */
-	prop propDescription\String
+	# Prop description.
+	prop propDescription\string
 
-	/**
-	 * Prop alias.
-	 *
-	 * @type {String}
-	 */
-	prop propAlias\String
+	# Prop alias.
+	prop propAlias\string
 
-	/**
-	 * Prop alias options.
-	 *
-	 * @type {Array}
-	 */
-	prop propAliasOptions = []
+	# Prop alias options.
+	prop propAliasOptions\Array = []
 
-	/**
-	 * Prop alias defaults.
-	 *
-	 * @type {Array}
-	 */
-	prop propAliasDefaults = []
+	# Prop alias defaults.
+	prop propAliasDefaults\Array = []
 
-	/**
-	 * Mark as nullable.
-	 *
-	 * @param {Boolean} isNullable
-	 */
-	def nullable isNullable\Boolean = true
+	# Mark as nullable.
+	def nullable\Prop isNullable\boolean = true
 		self.required = !isNullable
 
 		self
 
-	/**
-	 * Set prop description.
-	 *
-	 * @param {String} description
-	 */
-	def description description\String
+	# Set prop description.
+	def description\Prop description\string
 		self.propDescription = description
 
 		self
 
-	/**
-	 * Set prop alias.
-	 *
-	 * @param {String|Array} alias
-	 */
-	def alias alias\String|Array
+	# Set prop alias.
+	def alias\Prop alias\string|Array
 		if typeof alias === 'string' && alias.length !== 1
 			throw new RangeError 'Alias length must be 1'
 

@@ -1,10 +1,10 @@
 export default class GlobalOptions {
     /**
-    @param {Boolean} help
-    @param {Boolean} quiet
-    @param {Boolean} noInteraction
-    @param {String} env
-    @param {Boolean} noAnsi
+    @param {boolean} help
+    @param {boolean} quiet
+    @param {boolean} noInteraction
+    @param {string} env
+    @param {boolean} noAnsi
     */
     constructor(help?: boolean, quiet?: boolean, noInteraction?: boolean, env?: string, noAnsi?: boolean, verbose?: number);
     incoming: string[];

@@ -15,8 +15,8 @@ export default class Signature {
     }[];
     /**
     @param {Command} command
-    @param {String} type
-    @param {String} name
+    @param {string} type
+    @param {string} name
     @param {any} default
     */
     static get(command: Command, type: string, name: string, default$: any): any;

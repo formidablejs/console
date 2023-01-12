@@ -1,67 +1,9 @@
 export default class Application {
     /**
-         * A list of registered commands.
-         *
-         * @type {Array}
-         */
-    /**
-         * Default command.
-         *
-         * @type {DefaultCommand}
-         */
-    /**
-         * Exit protocol.
-         *
-         * @type {Boolean}
-        prop #silentExit\Boolean = false
-    
-        \/\**
-         * Accessible commands.
-         *
-         * @type {Object}
-         */
-    /**
-         * Application name
-         *
-         * @type {String}
-         */
-    /**
-         * Application version (semver).
-         *
-         * @type {String}
-         */
-    /**
-         * Custom signature.
-         *
-         * @type {String|null}
-         */
-    /**
-         * Application events.
-         *
-         * @type {Function[]|null}
-         */
-    /**
-         * onDefaultCommand events.
-         *
-         * @type {Function[]|null}
-         */
-    /**
-         * Instantiate console
-         *
-         * @param {String} name
-         * @param {String} version
-         */
-    /**
-    *
-         * Instantiate console
-         *
-         * @param {String} name
-         * @param {String} version
-         
-    @param {String} name
-    @param {String|null} version
+    @param {string} name
+    @param {string|null} version
     */
-    constructor(name: string, version?: string);
+    constructor(name: string, version?: string | null);
     commands: any;
     defaultCommand: any;
     accessible: any;
@@ -69,56 +11,38 @@ export default class Application {
     version: string;
     signature: any;
     /**
-         * Register a new command.
-         *
-         * @param {Function} command
-         * @returns {Application}
-         */
-    /**
-    *
-         * Register a new command.
-         *
-         * @param {Function} command
-         * @returns {Application}
-         
     @param {Function} command
+    @returns { Application }
     */
     register(command: Function): Application;
     /**
-         * Get incoming command options.
-         *
-         * @returns {CommandOptions}
-         */
-    /**
-    *
-         * Get incoming command options.
-         *
-         * @returns {CommandOptions}
-         
+    @returns { CommandOptions }
     */
     options(): CommandOptions;
     /**
     @param {Function} callback
+    @returns { Application }
     */
     onDefaultCommand(callback: Function): Application;
     /**
-    @param {String} event
+    @param {string} event
     @param {Function} callback
+    @returns { Application }
     */
     onEvent(event: string, callback: Function): Application;
     /**
-    @param {String|null} signature
+    @param {string|null} signature
     */
     run(signature?: string | null): Promise<any[]>;
     [$__patch__$]($$?: {}): void;
     [$__init__$]($$?: any, deep?: boolean): void;
+    [$silentExit$]: any;
     [$applicationEvents$]: any;
     [$onDefaultCommandEvents$]: any;
-    [$silentExit$]: boolean;
 }
 declare const $__patch__$: unique symbol;
 declare const $__init__$: unique symbol;
+declare const $silentExit$: unique symbol;
 declare const $applicationEvents$: unique symbol;
 declare const $onDefaultCommandEvents$: unique symbol;
-declare const $silentExit$: unique symbol;
 export {};

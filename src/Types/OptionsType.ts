@@ -1,3 +1,3 @@
-type OptionsType {
+type OptionsType = {
 
 }

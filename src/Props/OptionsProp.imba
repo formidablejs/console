@@ -2,58 +2,30 @@ import Prop from './Prop'
 
 export default class OptionsProp < Prop
 
-	/**
-	 * String prop type.
-	 *
-	 * @type {StringContructor}
-	 */
-	prop type = String
+	# String prop type.
+	prop type\StringContructor = String
 
-	/**
-	 * Default value.
-	 *
-	 * @type {Number}
-	 */
-	prop defaultValue\Number
+	# Default value.
+	prop defaultValue\number
 
-	/**
-	 * Allowed values.
-	 *
-	 * @type {any[]}
-	 */
+	# Allowed values.
 	prop allowed\any[] = []
 
-	/**
-	 * Set default value.
-	 *
-	 * @param {any} value
-	 * @returns {OptionsProp}
-	 */
-	def default value\any
+	# Set default value.
+	def default\OptionsProp value\any
 		self.defaultValue = value
 
 		self
 
-	/**
-	 * Set allowed values.
-	 *
-	 * @param {any} value
-	 * @returns {OptionsProp}
-	 */
-	def options options\any[]
+	# Set allowed values.
+	def options\OptionsProp options\any[]
 		self.allowed = options
 
 		self
 
-	/**
-	 * Validate incoming value.
-	 *
-	 * @param {String|null} command
-	 * @param {any} value
-	 * @returns {String|Boolean|null}
-	 */
-	def validate command\String|null, name, value\String|any
-		const results = self.allowed.some do(expected\String|any)
+	# Validate incoming value.
+	def validate\string|boolean|null command\string|null, name, value\string|any
+		const results = self.allowed.some do(expected\string|any)
 			(typeof value == 'string' ? expected.toLowerCase! : expected) == (typeof value == 'string' ? value.toLowerCase! : value)
 
 		if !results

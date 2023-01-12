@@ -1,4 +1,4 @@
-type CommandArgument {
+type CommandArgument = {
 	position: Number,
 	name: String,
 	default: any,

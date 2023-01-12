@@ -3,7 +3,7 @@ import { Transform } from 'stream'
 
 export default class Output
 
-	static prop noAnsi\Boolean = false
+	static prop noAnsi\boolean = false
 
 	static def table array\Array, results = ''
 		const transform = new Transform {
@@ -26,13 +26,8 @@ export default class Output
 
 		console.log results.replace(/\r?\n?[^\r\n]*$/, '').replace(/\r?\n?[^\r\n]*$/, '')
 
-	/**
-	 * Write line with templating support.
-	 *
-	 * @param {String} line
-	 * @returns {void}
-	 */
-	static def write line\String
+	# Write line with templating support.
+	static def write line\string
 		/** set black background. */
 		line = line.replace /<bg:black>([\s\S]*?)<\/bg:black>/g, "\x1b[40m$1\x1b[0m"
 
@@ -89,31 +84,16 @@ export default class Output
 
 		console.log noAnsi ? line.replace(/\u001b\[.*?m/g, '') : line
 
-	/**
-	 * Write raw line.
-	 *
-	 * @param {String} line
-	 * @returns {void}
-	 */
-	static def line line\String
+	# Write raw line.
+	static def line line\string
 		console.log line
 
-	/**
-	 * Write success line.
-	 *
-	 * @param {String} line
-	 * @returns {void}
-	 */
-	static def success line\String
+	# Write success line.
+	static def success line\string
 		Output.write "<fg:green>{line}</fg:green>"
 
-	/**
-	 * Write error line.
-	 *
-	 * @param {String} line
-	 * @returns {void}
-	 */
-	static def error line\String
+	# Write error line.
+	static def error line\string
 		console.log ''
 
 		let length = 0

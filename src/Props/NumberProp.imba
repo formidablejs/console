@@ -2,27 +2,14 @@ import Prop from './Prop'
 
 export default class NumberProp < Prop
 
-	/**
-	 * Boolean prop type.
-	 *
-	 * @type {NumberConstructor}
-	 */
-	prop type = Number
+	# Boolean prop type.
+	prop type\NumberConstructor = Number
 
-	/**
-	 * Default value.
-	 *
-	 * @type {Number}
-	 */
-	prop defaultValue\Number
+	# Default value.
+	prop defaultValue\number
 
-	/**
-	 * Set default value.
-	 *
-	 * @param {Number} value
-	 * @returns {NumberProp}
-	 */
-	def default value\Number
+	# Set default value.
+	def default\NumberProp value\number
 		self.defaultValue = value
 
 		self
