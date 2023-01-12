@@ -178,7 +178,7 @@ export default class DefaultCommand < Command
 				type: opt.type
 				default: opt.default
 				allowed: opt.prop && Array.isArray(opt.prop.allowed) ? opt.prop.allowed : null
-				multiple: opt.prop && opt.prop.multiple
+				allowsMany: opt.prop && opt.prop.allowsMany
 			}
 		).concat(self.helpOptions)
 
@@ -203,7 +203,7 @@ export default class DefaultCommand < Command
 
 			if name then length = name.length > length ? name.length : length
 
-			const description = (option.description ? "{option.description} " : '') + (option.default ? "<fg:green>[default: \"{option.default}\"]</fg:green>" : '') + (option.multiple ? "<fg:green>[multiple]</fg:green>" : '')
+			const description = (option.description ? "{option.description} " : '') + (option.default ? "<fg:green>[default: \"{option.default}\"]</fg:green>" : '') + (option.allowsMany ? "<fg:green>[multiple]</fg:green>" : '')
 
 			display.push { name, description }
 
