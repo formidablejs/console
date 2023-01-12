@@ -1,4 +1,4 @@
-type CommandOptions {
+type CommandOptions = {
     name: String,
     arguments: String[],
     options: Object[]

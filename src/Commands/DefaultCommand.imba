@@ -7,33 +7,17 @@ import Prompt from '../Utils/Prompt'
 
 export default class DefaultCommand < Command
 
-	/**
-	 * A list of registered commands.
-	 *
-	 * @type {Object}
-	 */
-	prop commands\Object = {}
+	# A list of registered commands.
+	prop commands\object = {}
 
-	/**
-	 * Application name
-	 *
-	 * @type {String}
-	 */
-	prop name\String
+	# Application name.
+	prop name\string
 
-	/**
-	 * Application version (semver).
-	 *
-	 * @type {String}
-	 */
-	prop version\String
+	# Application version (semver).
+	prop version\string
 
-	/**
-	 * A list of help options.
-	 *
-	 * @type {{}[]}
-	 */
-	get helpOptions
+	# A list of help options.
+	get helpOptions\Array<object>
 		[
 			{
 				alias: 'h'
@@ -60,28 +44,16 @@ export default class DefaultCommand < Command
 			}
 		]
 
-	/**
-	 * Register as a default command.
-	 *
-	 * @type {Boolean}
-	 */
-	get default
+	# Register as a default command.
+	get default\boolean
 		true
 
-	/**
-	 * The name and signature of the console command.
-	 *
-	 * @type {String}
-	 */
-	get signature
+	# The name and signature of the console command.
+	get signature\string
 		'default {?--help} {?--version} {?--no-ansi} {?--no-interaction} {?--verbose}'
 
-	/**
-	 * Command props.
-	 *
-	 * @type {Object}
-	 */
-	get props
+	# Command props.
+	get props\object
 		{
 			help: Prop.boolean!.alias('h').default(false)
 			version: Prop.boolean!.alias('V').default(false)
@@ -90,40 +62,25 @@ export default class DefaultCommand < Command
 			'no-interaction': Prop.boolean!.default(false)
 		}
 
-	/**
-	 * Set application name.
-	 *
-	 * @param {String} name
-	 * @returns {DefaultCommand}
-	 */
-	def setName name\String
+	# Set application name.
+	def setName\DefaultCommand name\string
 		self.name = name
 
 		self
 
-	/**
-	 * Set application version.
-	 *
-	 * @param {String} version
-	 * @returns {DefaultCommand}
-	 */
-	def setVersion version\String
+	# Set application version.
+	def setVersion\DefaultCommand version\string
 		self.version = version
 
 		self
 
-	/**
-	 * Set registered commands.
-	 *
-	 * @param {String} version
-	 * @returns {DefaultCommand}
-	 */
-	def registered commands\Command[]
+	# Set registered commands.
+	def registered\DefaultCommand commands\Command[]
 		self.commands = commands
 
 		self
 
-	def displayHelp commands\Array, length\Number
+	def displayHelp commands\Array, length\number
 		let display = []
 
 		self.helpOptions.forEach do(option)
@@ -169,6 +126,7 @@ export default class DefaultCommand < Command
 
 			self.write "  <fg:green>{command.name}  {' '.repeat(length - command.name.length)}</fg:green>{command.description}"
 
+	# Display command help.
 	def displayCommandHelp command\Command
 		const options = command.opts!.map(do(opt)
 			{
@@ -234,23 +192,20 @@ export default class DefaultCommand < Command
 		display.forEach do(option)
 			self.write "  <fg:green>{option.name}</fg:green>  {' '.repeat(length - option.name.length)}{option.description ?? ''}"
 
+	# Display cli version.
 	def displayVersion
 		self.write "{self.name} <fg:green>{self.version}</fg:green>"
 
-	/**
-	 * Execute the console command.
-	 *
-	 * @returns {mixed}
-	 */
+	# Execute the console command.
 	def handle
 		let command\Command = self.commands[self.options.name]
 
-		let   help\Boolean          = self.option 'help'
-		const quiet\Boolean         = self.option 'quiet', false
-		const noInteraction\Boolean = self.option 'no-interaction', false
-		const env\String|null       = self.option 'env'
-		const noAnsi\Boolean        = self.option 'no-ansi', false
-		let   verbose\Number        = 1
+		let   help\boolean          = self.option 'help'
+		const quiet\boolean         = self.option 'quiet', false
+		const noInteraction\boolean = self.option 'no-interaction', false
+		const env\string|null       = self.option 'env'
+		const noAnsi\boolean        = self.option 'no-ansi', false
+		let   verbose\number        = 1
 
 		const verboseOption = this._incoming.opts.filter(do(opt)
 			opt.name == 'verbose'
@@ -289,7 +244,7 @@ export default class DefaultCommand < Command
 
 			self.options.options.forEach do(option)
 				if !['help', 'version', 'h', 'V', 'v', 'vv', 'vvv', 'verbose', 'no-ansi'].includes(option.name)
-					const expected\String = required.length > 0 ? ", expected {required.length > 1 ? 'options' : 'option'} {required.join(', ')}" : ''
+					const expected\string = required.length > 0 ? ", expected {required.length > 1 ? 'options' : 'option'} {required.join(', ')}" : ''
 
 					self.error "Unexpected option {option.assessor}{option.name}{expected}"
 
@@ -301,13 +256,13 @@ export default class DefaultCommand < Command
 		if !self.options.name && help
 			let all\Array = []
 			let groups\Array = []
-			let length\Number = 20
+			let length\number = 20
 
 			Object.keys(self.commands).forEach do(command)
 				if self.commands[command].getName() !== 'default'
-					const group\String = self.commands[command].getGroup! ?? ''
-					const name\String = self.commands[command].getName!
-					const description\String = self.commands[command].description ?? ''
+					const group\string = self.commands[command].getGroup! ?? ''
+					const name\string = self.commands[command].getName!
+					const description\string = self.commands[command].description ?? ''
 
 					if name then length = name.length > length ? name.length : length
 

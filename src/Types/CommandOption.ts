@@ -1,4 +1,4 @@
-type CommandOption {
+type CommandOption = {
 	position: Number,
 	name: String,
 	default: any,

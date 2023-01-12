@@ -2,44 +2,23 @@ import Prop from './Prop'
 
 export default class StringProp < Prop
 
-	/**
-	 * String prop type.
-	 *
-	 * @type {StringContructor}
-	 */
-	prop type = String
+	# String prop type.
+	prop type\StringContructor = String
 
-	/**
-	 * Default value.
-	 *
-	 * @type {String}
-	 */
-	prop defaultValue\String
+	# Default value.
+	prop defaultValue\string
 
-	/**
-	 * Allows many values.
-	 *
-	 * @type {Booelan}
-	 */
-	prop allowsMany\Boolean = false
+	# Allows many values.
+	prop allowsMany\boolean = false
 
-	/**
-	 * Set default value.
-	 *
-	 * @param {String} value
-	 * @returns {StringProp}
-	 */
-	def default value\String
+	# Set default value.
+	def default\StringProp value\string
 		self.defaultValue = value
 
 		self
 
-	/**
-	 * Allow multiple values.
-	 *
-	 * @returns {StringProp}
-	 */
-	def multiple
+	# Allow multiple values.
+	def multiple\StringProp
 		self.allowsMany = true
 
 		self

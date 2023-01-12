@@ -9,194 +9,96 @@ export default class Command
 
 	prop #_globalOptions\GlobalOptions
 
-	/**
-	 * Exit protocol.
-	 *
-	 * @type {Boolean|null}
-	 */
-	prop silentExit\Boolean = false
+	# Exit protocol.
+	prop silentExit\boolean = false
 
-	/**
-	 * Register as a default command.
-	 *
-	 * @type {Boolean|null}
-	 */
-	get default
+	# Register as a default command.
+	get default\boolean|null
 		null
 
-	/**
-	 * The name and signature of the console command.
-	 *
-	 * @type {String}
-	 */
-	get signature
+	# The name and signature of the console command.
+	get signature\string
 		null
 
-	/**
-	 * Command props.
-	 *
-	 * @type {Object}
-	 */
-	get props
+	# Command props.
+	get props\object
 		{}
 
-	/**
-	 * The console command description.
-	 *
-	 * @type {String}
-	 */
-	get description
+	# The console command description.
+	get description\string|null
 		null
 
-	/**
-	 * Command options.
-	 *
-	 * @type {CommandOptions}
-	 */
+	# Command options.
 	prop options\CommandOptions
 
-	/**
-	 * Incoming arguments and options.
-	 *
-	 * @type {Object}
-	 */
+	# Incoming arguments and options.
 	prop _incoming = { args: {}, opts: {} }
 
-	/**
-	 * Global options.
-	 *
-	 * @var {GlobalOptions|null}
-	 */
-	get globalOptions
+	# Global options.
+	get globalOptions\GlobalOptions|null
 		self.#_globalOptions
 
-	/**
-	 * Set global options.
-	 *
-	 * @param {GlobalOptions} options
-	 * @returns {Command}
-	 */
-	def setGlobalOptions globalOptions\GlobalOptions
+	# Set global options.
+	def setGlobalOptions\Command globalOptions\GlobalOptions
 		self.#_globalOptions = globalOptions
 
 		self
 
-	/**
-	 * Get command name.
-	 *
-	 * @returns {String|null}
-	 */
-	def getName
+	# Get command name.
+	def getName\string|null
 		self.signature.split(' ')[0] ?? null
 
-	/**
-	 * Get command group.
-	 *
-	 * @returns {String|null}
-	 */
-	def getGroup
-		const name\String|null = self.getName!
+	# Get command group.
+	def getGroup\string|null
+		const name\string|null = self.getName!
 
-		let group\String|null = null
+		let group\string|null = null
 
 		if name && name.includes(':') then group = name.split(':')[0]
 
 		group
 
-	/**
-	 * Get registered arguments.
-	 *
-	 * @returns {CommandArgument[]}
-	 */
-	def args
+	# Get registered arguments.
+	def args\CommandArgument[]
 		Signature.raw(this).filter do(arg) arg.flag === 'argument'
 
-	/**
-	 * Get registered options.
-	 *
-	 * @returns {CommandOption[]}
-	 */
-	def opts
+	# Get registered options.
+	def opts\CommandOption[]
 		Signature.raw(this).filter do(arg) arg.flag === 'option'
 
-	/**
-	 * Write error message.
-	 *
-	 * @param {String} message
-	 * @returns {never}
-	 */
-	def error message\String
+	# Write error message.
+	def error message\string
 		Output.error message
 
-	/**
-	 * Write line message.
-	 *
-	 * @param {String} message
-	 * @returns {void}
-	 */
+	# Write line message.
 	def line line\any
 		Output.line line
 
-	/**
-	 * Write formatted message.
-	 *
-	 * @param {String} message
-	 * @returns {void}
-	 */
+	# Write formatted message.
 	def write message\any
 		Output.write message
 
-	/**
-	 * Write line message.
-	 *
-	 * @param {String} message
-	 * @returns {void}
-	 */
-	def info line\String
+	# Write line message.
+	def info line\string
 		Output.success line
 
-	/**
-	 * Write table.
-	 *
-	 * @param {Array} object
-	 * @returns {void}
-	 */
+	# Write table.
 	def table object\Array
 		Output.table object
 
-	/**
-	 * Get incoming argument.
-	 *
-	 * @param {String} name
-	 * @param {mixed} default
-	 * @returns {mixed}
-	 */
-	def argument name\String, default\any = null
+	# Get incoming argument.
+	def argument name\string, default\any = null
 		Signature.get this, 'args', name, default
 
-	/**
-	 * Get incoming option.
-	 *
-	 * @param {String} name
-	 * @param {mixed} default
-	 * @returns {mixed}
-	 */
-	def option name\String, default\any = null
+	# Get incoming option.
+	def option name\string, default\any = null
 		Signature.get this, 'opts', name, default
 
-	/**
-	 * Execute the console command.
-	 *
-	 * @returns {mixed}
-	 */
+	# Execute the console command.
 	def handle
 		0
 
-	/**
-	 * Run console command handler.
-	 *
-	 * @returns {mixed}
-	 */
+	# Run console command handler.
 	def run options\CommandOptions, globalOptions\GlobalOptions|null
 		self.options = options
 
@@ -216,12 +118,7 @@ export default class Command
 
 		results
 
-	/**
-	 * Exit command.
-	 *
-	 * @param {Number|null} exitCode
-	 * @returns {mixed}
-	 */
+	# Exit command.
 	def exit exitCode\number = null
 		if !isNaN(exitCode)
 			process.exitCode = Number(exitCode)
