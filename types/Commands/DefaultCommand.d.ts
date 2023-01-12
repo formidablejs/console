@@ -5,84 +5,27 @@ export default class DefaultCommand extends Command {
     name: any;
     version: any;
     /**
-         * A list of registered commands.
-         *
-         * @type {Object}
-         */
-    /**
-         * Application name
-         *
-         * @type {String}
-         */
-    /**
-         * Application version (semver).
-         *
-         * @type {String}
-         */
-    /**
-         * A list of help options.
-         *
-         * @type {{}[]}
-         */
-    /**
-    *
-         * A list of help options.
-         *
-         * @type {{}[]}
-         
+    @returns { Array<object> }
     */
-    get helpOptions(): {}[];
+    get helpOptions(): any[];
     /**
-         * Set application name.
-         *
-         * @param {String} name
-         * @returns {DefaultCommand}
-         */
-    /**
-    *
-         * Set application name.
-         *
-         * @param {String} name
-         * @returns {DefaultCommand}
-         
-    @param {String} name
+    @param {string} name
+    @returns { DefaultCommand }
     */
     setName(name: string): DefaultCommand;
     /**
-         * Set application version.
-         *
-         * @param {String} version
-         * @returns {DefaultCommand}
-         */
-    /**
-    *
-         * Set application version.
-         *
-         * @param {String} version
-         * @returns {DefaultCommand}
-         
-    @param {String} version
+    @param {string} version
+    @returns { DefaultCommand }
     */
     setVersion(version: string): DefaultCommand;
     /**
-         * Set registered commands.
-         *
-         * @param {String} version
-         * @returns {DefaultCommand}
-         */
-    /**
-    *
-         * Set registered commands.
-         *
-         * @param {String} version
-         * @returns {DefaultCommand}
-         
     @param {Command[]} commands
+    @returns { DefaultCommand }
     */
     registered(commands: Command[]): DefaultCommand;
     /**
     @param {Array} commands
-    @param {Number} length
+    @param {number} length
     */
     displayHelp(commands: any[], length: number): void;
     /**
@@ -90,10 +33,12 @@ export default class DefaultCommand extends Command {
     */
     displayCommandHelp(command: Command): void;
     displayVersion(): void;
+    handle(): Promise<0 | 1 | GlobalOptions>;
     [$__patch__$]($$?: {}): void;
     [$__init__$]($$?: any, deep?: boolean, ...args: any[]): void;
 }
 import Command from "../Command";
+import GlobalOptions from "../GlobalOptions";
 declare const $__patch__$: unique symbol;
 declare const $__init__$: unique symbol;
 export {};

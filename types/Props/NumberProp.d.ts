@@ -4,29 +4,8 @@ export default class NumberProp extends Prop {
     type: any;
     defaultValue: any;
     /**
-         * Boolean prop type.
-         *
-         * @type {NumberConstructor}
-         */
-    /**
-         * Default value.
-         *
-         * @type {Number}
-         */
-    /**
-         * Set default value.
-         *
-         * @param {Number} value
-         * @returns {NumberProp}
-         */
-    /**
-    *
-         * Set default value.
-         *
-         * @param {Number} value
-         * @returns {NumberProp}
-         
-    @param {Number} value
+    @param {number} value
+    @returns { NumberProp }
     */
     default(value: number): NumberProp;
     [$__patch__$]($$?: {}): void;

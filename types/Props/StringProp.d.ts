@@ -5,47 +5,12 @@ export default class StringProp extends Prop {
     defaultValue: any;
     allowsMany: any;
     /**
-         * String prop type.
-         *
-         * @type {StringContructor}
-         */
-    /**
-         * Default value.
-         *
-         * @type {String}
-         */
-    /**
-         * Allows many values.
-         *
-         * @type {Booelan}
-         */
-    /**
-         * Set default value.
-         *
-         * @param {String} value
-         * @returns {StringProp}
-         */
-    /**
-    *
-         * Set default value.
-         *
-         * @param {String} value
-         * @returns {StringProp}
-         
-    @param {String} value
+    @param {string} value
+    @returns { StringProp }
     */
     default(value: string): StringProp;
     /**
-         * Allow multiple values.
-         *
-         * @returns {StringProp}
-         */
-    /**
-    *
-         * Allow multiple values.
-         *
-         * @returns {StringProp}
-         
+    @returns { StringProp }
     */
     multiple(): StringProp;
     [$__patch__$]($$?: {}): void;
