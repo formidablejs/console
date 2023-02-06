@@ -74,7 +74,7 @@ export default class Command {
     @param {any} default
     */
     option(name: string, default$?: any): any;
-    handle(): any;
+    handle(): number;
     /**
     @param {CommandOptions} options
     @param {GlobalOptions|null} globalOptions
