@@ -221,20 +221,20 @@ export default class DefaultCommand < Command
 		if !command && self.options.name
 			const all = Object.keys(self.commands)
 
-			if self.option('no-interaction') != true
-				let asked = false
+			# if self.option('no-interaction') != true
+			# 	let asked = false
 
-				for c in all
-					if Similar(self.options.name, c) >= 70 && asked == false
-						asked = true
+			# 	for c in all
+			# 		if Similar(self.options.name, c) >= 70 && asked == false
+			# 			asked = true
 
-						const response = await Prompt("Did you mean \"{c}\"?")
+			# 			const response = await Prompt("Did you mean \"{c}\"?")
 
-						if response == true
-							command = self.commands[c]
-							options.name = c
+			# 			if response == true
+			# 				command = self.commands[c]
+			# 				self.options.name = c
 
-						break
+			# 			break
 
 			if !command
 				self.error "Command \"{self.options.name}\" is not defined."

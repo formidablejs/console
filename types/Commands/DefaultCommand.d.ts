@@ -33,7 +33,7 @@ export default class DefaultCommand extends Command {
     */
     displayCommandHelp(command: Command): void;
     displayVersion(): void;
-    handle(): Promise<0 | 1 | GlobalOptions>;
+    handle(): 0 | 1 | GlobalOptions;
     [$__patch__$]($$?: {}): void;
     [$__init__$]($$?: any, deep?: boolean, ...args: any[]): void;
 }
