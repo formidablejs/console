@@ -10,6 +10,7 @@ export default class Application {
     name: string;
     version: string;
     signature: any;
+    raw: any;
     /**
     @param {Function} command
     @returns { Application }
