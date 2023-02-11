@@ -29,6 +29,9 @@ export default class Application
 	# Custom signature.
 	prop signature\string
 
+	# Raw signatire
+	prop raw\Array<string|number>
+
 	# Application events.
 	prop #applicationEvents\Function[] = []
 
@@ -48,7 +51,7 @@ export default class Application
 
 	# Get incoming command options.
 	def options\CommandOptions
-		const args\string[] = signature ? signature.split ' ' : process.argv.slice 2
+		const args\string[] = raw ? raw : process.argv.slice 2
 
 		const command\CommandOptions = { name: null, arguments: [], options: [], recieved: '' }
 
@@ -124,6 +127,9 @@ export default class Application
 		if results instanceof GlobalOptions
 			if !self.signature
 				self.signature = results.incoming.join(' ')
+
+			if !self.raw
+				self.raw = results.incoming
 
 			options\CommandOptions = self.options!
 
