@@ -38,12 +38,14 @@ export default class Application {
     [$__patch__$]($$?: {}): void;
     [$__init__$]($$?: any, deep?: boolean): void;
     [$silentExit$]: any;
+    [$internal$]: any;
     [$applicationEvents$]: any;
     [$onDefaultCommandEvents$]: any;
 }
 declare const $__patch__$: unique symbol;
 declare const $__init__$: unique symbol;
 declare const $silentExit$: unique symbol;
+declare const $internal$: unique symbol;
 declare const $applicationEvents$: unique symbol;
 declare const $onDefaultCommandEvents$: unique symbol;
 export {};

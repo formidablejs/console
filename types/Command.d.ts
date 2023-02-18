@@ -1,6 +1,7 @@
 export default class Command {
     constructor($$?: any);
     silentExit: any;
+    internal: any;
     options: any;
     _incoming: any;
     /**
@@ -44,6 +45,12 @@ export default class Command {
     @returns { CommandOption[] }
     */
     opts(): CommandOption[];
+    /**
+    @param {string} type
+    @param {string} message
+    @param {boolean} newLine
+    */
+    message(type: 'error' | 'warning' | 'info', message: string, newLine?: boolean): void;
     /**
     @param {string} message
     */

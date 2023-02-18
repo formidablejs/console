@@ -17,6 +17,9 @@ export default class Application
 	# Exit protocol.
 	prop #silentExit\boolean = false
 
+	# Internal command.
+	prop #internal\boolean = false
+
 	# Accessible commands.
 	prop accessible\object = {}
 
@@ -51,7 +54,13 @@ export default class Application
 
 	# Get incoming command options.
 	def options\CommandOptions
-		const args\string[] = raw ? raw : process.argv.slice 2
+		let args\string[] = []
+
+		if #internal
+			args = signature ? signature.match(/([^\s"]+|"[^"]*")+/g) : process.argv.slice 2
+
+		else
+			args = raw ? raw : process.argv.slice 2
 
 		const command\CommandOptions = { name: null, arguments: [], options: [], recieved: '' }
 
@@ -92,6 +101,7 @@ export default class Application
 	def run signature\string|null = null
 		if signature && typeof signature == 'string'
 			self.#silentExit = true
+			self.#internal = true
 			self.signature = signature
 
 		self.register DefaultCommand
@@ -137,6 +147,9 @@ export default class Application
 
 		if self.#silentExit
 			command.silentExit = true
+
+		if self.#internal
+			command.internal = true
 
 		await command.run options, results instanceof GlobalOptions ? results : undefined
 
