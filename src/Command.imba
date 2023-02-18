@@ -12,6 +12,9 @@ export default class Command
 	# Exit protocol.
 	prop silentExit\boolean = false
 
+	# Internal command.
+	prop internal\boolean = false
+
 	# Register as a default command.
 	get default\boolean|null
 		null
@@ -65,6 +68,29 @@ export default class Command
 	# Get registered options.
 	def opts\CommandOption[]
 		Signature.raw(this).filter do(arg) arg.flag === 'option'
+
+	# Write message.
+	def message type\string, message\string, newLine\boolean = true
+		type = type.toLowerCase!
+
+		if !['error', 'warning', 'info'].includes(type)
+			throw new Error 'Invalid message type.'
+
+		const bgMap = {
+			error: 'red',
+			info: 'blue',
+			warning: 'yellow'
+		}
+
+		let fg = ''
+
+		if type == 'warning'
+			fg = 'fg:red'
+
+		if self.internal
+			newLine = false
+
+		self.write "\n  <bg:{bgMap[type]}>{fg ? '<' + fg + '>' : ''} {type.toUpperCase!} {fg ? '</' + fg + '>' : ''}</bg:{bgMap[type]}> {message}{newLine ? "\n" : ''}"
 
 	# Write error message.
 	def error message\string
