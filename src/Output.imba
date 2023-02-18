@@ -79,6 +79,9 @@ export default class Output
 		/** make text dim. */
 		line = line.replace /<dim>([\s\S]*?)<\/dim>/g, "\x1b[2m$1\x1b[0m"
 
+		/** make text bright. */
+		line = line.replace /<bright>([\s\S]*?)<\/bright>/g, "\x1b[1m$1\x1b[0m"
+
 		/** underline text. */
 		line = line.replace /<u>([\s\S]*?)<\/u>/g, "\x1b[4m$1\x1b[0m"
 
