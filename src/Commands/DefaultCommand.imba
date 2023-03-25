@@ -22,7 +22,7 @@ export default class DefaultCommand < Command
 			{
 				alias: 'h'
 				name: 'help'
-				description: 'Display help for the given command. When no command is given display help for the <fg:green>list</fg:green> command'
+				description: 'Display help for the given command. When no command is given, a list of all commands will be displayed'
 			}
 			{
 				alias: 'V'
