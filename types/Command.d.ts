@@ -1,3 +1,8 @@
+import CommandArgument from '../src/Types/CommandArgument';
+import CommandOption from '../src/Types/CommandOption';
+import CommandOptions from '../src/Types/CommandOptions';
+import GlobalOptions from './GlobalOptions';
+
 export default class Command {
     constructor($$?: any);
     silentExit: any;
@@ -50,7 +55,7 @@ export default class Command {
     @param {string} message
     @param {boolean} newLine
     */
-    message(type: 'error' | 'warning' | 'info', message: string, newLine?: boolean): void;
+    message(type: 'error' | 'warning' | 'warn' | 'info', message: string, newLine?: boolean): void;
     /**
     @param {string} message
     */
@@ -81,7 +86,7 @@ export default class Command {
     @param {any} default
     */
     option(name: string, default$?: any): any;
-    handle(): number;
+    handle(): any;
     /**
     @param {CommandOptions} options
     @param {GlobalOptions|null} globalOptions
@@ -91,11 +96,6 @@ export default class Command {
     @param {number} exitCode
     */
     exit(exitCode?: number): never;
-    [$__patch__$]($$?: {}): void;
-    [$__init__$]($$?: any, deep?: boolean): void;
-    [$_globalOptions$]: any;
 }
-declare const $__patch__$: unique symbol;
-declare const $__init__$: unique symbol;
-declare const $_globalOptions$: unique symbol;
-export {};
+
+export { };

@@ -73,18 +73,19 @@ export default class Command
 	def message type\string, message\string, newLine\boolean = true
 		type = type.toLowerCase!
 
-		if !['error', 'warning', 'info'].includes(type)
+		if !['error', 'warning', 'warn', 'info'].includes(type)
 			throw new Error 'Invalid message type.'
 
 		const bgMap = {
 			error: 'red',
 			info: 'blue',
 			warning: 'yellow'
+			warn: 'yellow'
 		}
 
 		let fg = ''
 
-		if type == 'warning'
+		if type === 'warning' || type === 'warn'
 			fg = 'fg:red'
 
 		if self.internal
