@@ -90,7 +90,9 @@ export default class Command
 		if self.internal
 			newLine = false
 
-		self.write "\n  <bg:{bgMap[type]}>{fg ? '<' + fg + '>' : ''} {type.toUpperCase!} {fg ? '</' + fg + '>' : ''}</bg:{bgMap[type]}> {message}{newLine ? "\n" : ''}"
+		const msgType = type === 'warning' ? 'warn' : type
+
+		self.write "\n  <bg:{bgMap[type]}>{fg ? '<' + fg + '>' : ''} {msgType.toUpperCase!} {fg ? '</' + fg + '>' : ''}</bg:{bgMap[type]}> {message}{newLine ? "\n" : ''}"
 
 	# Write error message.
 	def error message\string
