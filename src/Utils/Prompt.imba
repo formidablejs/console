@@ -1,7 +1,7 @@
 import Output from '../Output'
 import readline from 'readline'
 
-export default def prompt question\string, default = 'no'
+export default def prompt question\string, default = 'no', inline = false
 	let response\string
 
 	const rl = readline.createInterface({
@@ -9,7 +9,7 @@ export default def prompt question\string, default = 'no'
 		output: process.stdout
 	})
 
-	rl.setPrompt("\n\x1b[32m {question} (yes/no)\x1b[0m [{default}]:\n > ")
+	rl.setPrompt(Output.style("<fg:green>{question} (yes/no)</fg:green> [{default}]:{inline ? '' : '\n>'} "))
 	rl.prompt!
 
 	new Promise do(resolve, reject)
@@ -18,7 +18,7 @@ export default def prompt question\string, default = 'no'
 			rl.close!
 
 		rl.on 'close', do()
-			if response == 'yes' or response == 'y'
+			if response == 'yes' or response == 'y' or (response == '' and default == 'yes')
 				response = true
 			else
 				response = false
