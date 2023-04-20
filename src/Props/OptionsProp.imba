@@ -24,11 +24,11 @@ export default class OptionsProp < Prop
 		self
 
 	# Validate incoming value.
-	def validate\string|boolean|null command\string|null, name, value\string|any
+	def validate\string|boolean|null command\string|null, name, value\string|any, type\string = 'option'
 		const results = self.allowed.some do(expected\string|any)
 			(typeof value == 'string' ? expected.toLowerCase! : expected) == (typeof value == 'string' ? value.toLowerCase! : value)
 
 		if !results
-			return "Expected one of [{self.allowed.map(do(option) '"' + option + '"').join(', ')}] to the \"{name}\" option, but got \"{value}\" instead"
+			return "Expected one of [{self.allowed.map(do(option) '"' + option + '"').join(', ')}] to the \"{name}\" {type}, but got \"{value}\" instead"
 
 		true
