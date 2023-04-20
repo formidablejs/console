@@ -2,99 +2,182 @@ import CommandArgument from '../src/Types/CommandArgument';
 import CommandOption from '../src/Types/CommandOption';
 import CommandOptions from '../src/Types/CommandOptions';
 import GlobalOptions from './GlobalOptions';
+import PropList from './Props/PropList';
+
+export type Incoming = {
+    args: object;
+    opts: object;
+}
 
 export default class Command {
+    /**
+     * @private
+     */
+    #_globalOptions: GlobalOptions;
+
+    /**
+     * @private
+     */
+    silentExit: boolean;
+
+    /**
+     * @private
+     */
+    internal: boolean;
+
+    /**
+     * @private
+     */
+    options: CommandOptions;
+
+    /**
+     * @private
+     */
+    _incoming: Incoming;
+
+    /**
+     * Instantiate a new command.
+     */
     constructor($$?: any);
-    silentExit: any;
-    internal: any;
-    options: any;
-    _incoming: any;
+
     /**
-    @returns { boolean|null }
-    */
+     * Whether or not this is the default command.
+     */
     get default(): boolean;
+
     /**
-    @returns { string }
-    */
+     * The command signature.
+     */
     get signature(): string;
+
     /**
-    @returns { object }
-    */
-    get props(): any;
+     * The command properties.
+     */
+    get props(): PropList;
+
     /**
-    @returns { string|null }
-    */
+     * The command description.
+     */
     get description(): string;
+
     /**
-    @returns { GlobalOptions|null }
-    */
+     * The Application's global command options.
+     */
     get globalOptions(): any;
+
     /**
-    @param {GlobalOptions} globalOptions
-    @returns { Command }
-    */
+     * Set Application's global command options.
+     */
     setGlobalOptions(globalOptions: GlobalOptions): Command;
+
     /**
-    @returns { string|null }
-    */
+     * The command name.
+     */
     getName(): string | null;
+
     /**
-    @returns { string|null }
-    */
+     * The command group.
+     */
     getGroup(): string | null;
+
     /**
-    @returns { CommandArgument[] }
-    */
+     * The command's arguments.
+     */
     args(): CommandArgument[];
+
     /**
-    @returns { CommandOption[] }
-    */
+     * The command's options.
+     */
     opts(): CommandOption[];
+
     /**
-    @param {string} type
-    @param {string} message
-    @param {boolean} newLine
-    */
-    message(type: 'error' | 'warning' | 'warn' | 'info', message: string, newLine?: boolean): void;
+     * Add a new line to the console.
+     */
+    newLine(count?: number): void;
+
     /**
-    @param {string} message
-    */
-    error(message: string): never;
+     * Write a message to the console.
+     */
+    message(type: 'error' | 'warning' | 'warn' | 'info', message: string, newLine?: boolean, both?: boolean): void;
+
     /**
-    @param {any} line
-    */
-    line(line: any): void;
+     * Write an error message to the console.
+     */
+    error(error: string | Error, stack?: boolean): never;
+
     /**
-    @param {any} message
-    */
-    write(message: any): void;
+     * Write a line to the console.
+     */
+    line(line: string): void;
+
     /**
-    @param {string} line
-    */
-    info(line: string): void;
+     * Write to the console.
+     */
+    write(message: string): void;
+
     /**
-    @param {Array} object
-    */
+     * Write to the console.
+     */
+    info(message: string): void;
+
+    /**
+     * Write a success message to the console.
+     */
+    success(line: string): void;
+
+    /**
+     * Output a table to the console.
+     */
     table(object: any[]): void;
+
     /**
-    @param {string} name
-    @param {any} default
-    */
+     * Create a title.
+     */
+    title(value: string): void;
+
+    /**
+     * Write a line from right to left.
+     */
+    rtl(line: string): void;
+
+    /**
+     * Center a string.
+     */
+    center(line: string): void;
+
+    /**
+     * Add a column to the console.
+     */
+    column(key: string | Array<string>, value: string | Array<string>, wide?: boolean): void;
+
+    /**
+     * Log a message to the console.
+     */
+    log(...args: any[]): void;
+
+    /**
+     * Get incoming command argument.
+     */
     argument(name: string, default$?: any): any;
+
     /**
-    @param {string} name
-    @param {any} default
-    */
+     * Get incoming command option.
+     */
     option(name: string, default$?: any): any;
-    handle(): any;
+
     /**
-    @param {CommandOptions} options
-    @param {GlobalOptions|null} globalOptions
-    */
+     * Execute the command.
+     */
+    handle(): void | never | number | Promise<void | never | number>;
+
+    /**
+     * Run the command handler.
+     */
     run(options: CommandOptions, globalOptions: GlobalOptions | null): Promise<number>;
+
     /**
-    @param {number} exitCode
-    */
+     * Exit command/application.
+     */
     exit(exitCode?: number): never;
 }
 

@@ -1,4 +1,1 @@
-/**
-@param {string} question
-*/
-export default function prompt(question: string, default$?: string): Promise<any>;
+export default function prompt(question: string, default$?: string | number | boolean, inline?: boolean): Promise<any>;
