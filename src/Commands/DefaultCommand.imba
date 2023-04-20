@@ -175,7 +175,7 @@ export default class DefaultCommand < Command
 
 		self.write "
 <fg:green>Usage:</fg:green>\n
-  {command.getName!} [options] {args.length > 0 ? '-- ' + '[' + args.map(do(arg) (!arg.required ? '<dim>' + '<' + arg.name + '>' + '</dim>' : '<' + arg.name + '>')).join(', ') + ']' : ''}\n"
+  {command.getName!} [options] {args.length > 0 ? '[' + args.map(do(arg) (!arg.required ? '<dim>' + '<' + arg.name + '>' + '</dim>' : '<' + arg.name + '>')).join(', ') + ']' : ''}\n"
 
 		if args.length > 0
 			self.write "
