@@ -15,6 +15,12 @@ export default class Command
 	# Internal command.
 	prop internal\boolean = false
 
+	# Command options.
+	prop options\CommandOptions
+
+	# Incoming arguments and options.
+	prop _incoming = { args: {}, opts: {} }
+
 	# Register as a default command.
 	get default\boolean|null
 		null
@@ -30,12 +36,6 @@ export default class Command
 	# The console command description.
 	get description\string|null
 		null
-
-	# Command options.
-	prop options\CommandOptions
-
-	# Incoming arguments and options.
-	prop _incoming = { args: {}, opts: {} }
 
 	# Global options.
 	get globalOptions\GlobalOptions|null
@@ -69,51 +69,57 @@ export default class Command
 	def opts\CommandOption[]
 		Signature.raw(this).filter do(arg) arg.flag === 'option'
 
-	# Write message.
-	def message type\string, message\string, newLine\boolean = true
-		type = type.toLowerCase!
+	# Add a new line to the console.
+	def newLine count\number = 1
+		Output.newLine count
 
-		if !['error', 'warning', 'warn', 'info'].includes(type)
-			throw new Error 'Invalid message type.'
+	# Write a message to the console.
+	def message type\string, message\string, newLine\boolean = true, both\boolean = false
+		Output.message type, message, newLine, both
 
-		const bgMap = {
-			error: 'red',
-			info: 'blue',
-			warning: 'yellow'
-			warn: 'yellow'
-		}
+	# Write an error message to the console.
+	def error error\string, stack\boolean = false
+		Output.error error, stack
 
-		let fg = ''
-
-		if type === 'warning' || type === 'warn'
-			fg = 'fg:red'
-
-		if self.internal
-			newLine = false
-
-		const msgType = type === 'warning' ? 'warn' : type
-
-		self.write "\n  <bg:{bgMap[type]}>{fg ? '<' + fg + '>' : ''} {msgType.toUpperCase!} {fg ? '</' + fg + '>' : ''}</bg:{bgMap[type]}> {message}{newLine ? "\n" : ''}"
-
-	# Write error message.
-	def error message\string
-		Output.error message
-
-	# Write line message.
+	# Write a line to the console.
 	def line line\any
 		Output.line line
 
-	# Write formatted message.
+	# Write to the console.
 	def write message\any
 		Output.write message
 
-	# Write line message.
+	# Write to the console.
 	def info line\string
+		Output.write line
+
+	# Write a success message to the console.
+	def success line\string
 		Output.success line
 
-	# Write table.
+	# Output a table to the console.
 	def table object\Array
 		Output.table object
+
+	# Create a title.
+	def title value\string
+		Output.title value
+
+	# Write a line from right to left.
+	def rtl value\string
+		Output.rtl value
+
+	# Center a string.
+	def center value\string
+		Output.center value
+
+	# Add a column to the console.
+	def column key\any, value\any, wide\boolean = false
+		Output.column key, value, wide
+
+	# Log to console.
+	def log
+		console.log.apply console, arguments
 
 	# Get incoming argument.
 	def argument name\string, default\any = null
