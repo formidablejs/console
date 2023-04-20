@@ -11,4 +11,4 @@ export default class GlobalOptions
 		self.verbose = verbose
 
 		self.incoming = process.argv.slice(2).filter do(arg)
-			!['--help', '-h', '--quiet', '-q', '--no-interaction', '-n', 'env', '--no-ansi', '-v', '-vv', '-vvv', '-verbose'].includes arg
+			!['--help', '-h', '--quiet', '-q', '--no-interaction', 'env', '--no-ansi', '-v', '-vv', '-vvv', '-verbose'].includes arg

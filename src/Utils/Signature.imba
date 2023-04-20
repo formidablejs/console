@@ -74,7 +74,7 @@ export default class Signature
 			if !command._incoming.args[position]
 				const required = command.args!.filter(do(arg) arg.required).map do(arg) '"' + arg.name + '"'
 
-				command.error "Too many arguments to \"{command.getName!}\" command, expected {required.length > 1 ? 'arguments' : 'argument'} {required.join(', ')}"
+				command.error "Too many arguments to \"{command.getName!}\" command" + (required.length > 0 ? ", expected {required.length > 1 ? 'arguments' : 'argument'} {required.join(', ')}" : '')
 
 			const expectedType = command._incoming.args[position].type
 			const typeReceived = !isNaN(argument) ? Number : String
@@ -83,6 +83,16 @@ export default class Signature
 				const name = command._incoming.args[position].name
 
 				command.error "Got {typeReceived.name} to \"{name}\" argument, expected {expectedType.name}"
+
+			if command._incoming.args[position]?.prop && command._incoming.args[position].prop.validate
+				const results = command._incoming.args[position].prop.validate(
+					command.getName!,
+					command._incoming.args[position].name,
+					argument,
+					'argument'
+				)
+
+				if typeof results == 'string' then command.error results
 
 			if expectedType.name == 'Number' then argument = Number(argument)
 

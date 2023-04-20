@@ -1,8 +1,8 @@
 export default class Prop {
-    static boolean(): BooleanProp;
-    static number(): NumberProp;
-    static string(): StringProp;
-    static options(): OptionsProp;
+    static boolean(description?: string): BooleanProp;
+    static number(description?: string): NumberProp;
+    static string(description?: string): StringProp;
+    static options(description?: string): OptionsProp;
 }
 import BooleanProp from "./Props/BooleanProp";
 import NumberProp from "./Props/NumberProp";

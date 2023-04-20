@@ -15,6 +15,10 @@ export default class Prop
 	# Prop alias defaults.
 	prop propAliasDefaults\Array = []
 
+	# Instantiate prop
+	def constructor description\string = null
+		if description then self.description description
+
 	# Mark as nullable.
 	def nullable\Prop isNullable\boolean = true
 		self.required = !isNullable

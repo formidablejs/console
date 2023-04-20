@@ -1,51 +1,70 @@
+import DefaultCommand from "./Commands/DefaultCommand";
+import CommandOptions from "../src/Types/CommandOptions";
+import Command from "./Command";
+
 export default class Application {
     /**
-    @param {string} name
-    @param {string|null} version
-    */
-    constructor(name: string, version?: string | null);
-    commands: any;
-    defaultCommand: any;
-    accessible: any;
+     * @private
+     */
+    commands: Array<typeof Command>;
+
+    /**
+     * @private
+     */
+    defaultCommand: DefaultCommand;
+
+    /**
+     * @private
+     */
+    accessible: object;
+
+    /**
+     * @private
+     */
     name: string;
+
+    /**
+     * @private
+     */
     version: string;
-    signature: any;
-    raw: any;
+
     /**
-    @param {Function} command
-    @returns { Application }
-    */
-    register(command: Function): Application;
+     * @private
+     */
+    signature: string;
+
     /**
-    @returns { CommandOptions }
-    */
+     * @private
+     */
+    raw: Array<string | number>;
+
+    /**
+     * Instantiate a new application.
+     */
+    constructor(name: string, version?: string | null);
+
+    /**
+     * Register a new command.
+     */
+    register(command: typeof Command): Application;
+
+    /**
+     * Get incoming command options.
+     */
     options(): CommandOptions;
+
     /**
-    @param {Function} callback
-    @returns { Application }
-    */
-    onDefaultCommand(callback: Function): Application;
+     * Add an event that runs when the default is called.
+     */
+    onDefaultCommand(callback: (options: CommandOptions) => void): Application;
+
     /**
-    @param {string} event
-    @param {Function} callback
-    @returns { Application }
-    */
-    onEvent(event: string, callback: Function): Application;
+     * Add an event that runs when a specific command is called.
+     */
+    onEvent(event: string, callback: (options: CommandOptions) => void): Application;
+
     /**
-    @param {string|null} signature
-    */
+     * Run the application and/or invoke a registered command.
+     */
     run(signature?: string | null): Promise<any[]>;
-    [$__patch__$]($$?: {}): void;
-    [$__init__$]($$?: any, deep?: boolean): void;
-    [$silentExit$]: any;
-    [$internal$]: any;
-    [$applicationEvents$]: any;
-    [$onDefaultCommandEvents$]: any;
 }
-declare const $__patch__$: unique symbol;
-declare const $__init__$: unique symbol;
-declare const $silentExit$: unique symbol;
-declare const $internal$: unique symbol;
-declare const $applicationEvents$: unique symbol;
-declare const $onDefaultCommandEvents$: unique symbol;
-export {};

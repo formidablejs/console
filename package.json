@@ -1,6 +1,6 @@
 {
   "name": "@formidablejs/console",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "The Formidable Console",
   "author": "Donald Pakkies",
   "license": "MIT",
@@ -20,8 +20,8 @@
     "imba:watch": "imbac -w src --output=lib --platform=node --format=cjs --clean",
     "ts:build": "tsc",
     "ts:watch": "tsc -w",
-    "test": "jest --roots test",
-    "test:watch": "jest --watchAll --roots test"
+    "test": "jest --roots test --silent",
+    "test:watch": "jest --watchAll --roots test --silent"
   },
   "keywords": [],
   "devDependencies": {
