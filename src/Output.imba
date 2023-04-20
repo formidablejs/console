@@ -1,10 +1,83 @@
 import { Console } from 'console'
 import { Transform } from 'stream'
+import { ansiRegex } from './Utils/ansiRegex'
 
 export default class Output
 
 	static prop noAnsi\boolean = false
 
+	# Create a new message group.
+	static def group ...args
+		if args.length > 2
+			throw new Error 'Too many arguments. Expected 1 or 2.'
+
+		if args.length == 0
+			throw new Error 'Too few arguments. Expected 1 or 2.'
+
+		let options
+		let callback
+
+		if args.length === 1
+			callback = args[0]
+		else
+			options = args[0]
+			callback = args[1]
+
+		if typeof callback !== 'function'
+			throw new TypeError 'Callback must be a function.'
+
+		if options
+			shouldGroup(options)
+
+		callback()
+
+		newLine!
+
+		shouldGroup(false)
+
+	# Whether or not to group messages.
+	static def shouldGroup options
+		if options !== true && options !== false
+			process.env.CONSOLE_FORMIDABLE_GROUP = JSON.stringify(options)
+
+			return
+
+		delete process.env.CONSOLE_FORMIDABLE_GROUP
+
+	# Whether or not to add a new line.
+	static def canAddLine
+		if !process.env.CONSOLE_FORMIDABLE_GROUP
+			return true
+
+		const options = JSON.parse(process.env.CONSOLE_FORMIDABLE_GROUP)
+
+		if options.newLine == undefined || options.newLine == null
+			return true
+
+		options.newLine == true
+
+	# Whether or not to expend columns.
+	static def canExpand
+		if !process.env.CONSOLE_FORMIDABLE_GROUP
+			return false
+
+		const options = JSON.parse(process.env.CONSOLE_FORMIDABLE_GROUP)
+
+		options.wide && options.wide == true
+
+	# Set padding around text.
+	static def getPadding
+		if !process.env.CONSOLE_FORMIDABLE_GROUP
+			return 0
+
+		const options = JSON.parse(process.env.CONSOLE_FORMIDABLE_GROUP)
+
+		if options.padding == undefined || options.padding == null
+			return 0
+
+		options.padding
+
+	# Output a table to the console.
 	static def table array\Array, results = ''
 		const transform = new Transform {
 			transform: do(chunk, enc, cb) cb(null, chunk)
@@ -26,8 +99,14 @@ export default class Output
 
 		console.log results.replace(/\r?\n?[^\r\n]*$/, '').replace(/\r?\n?[^\r\n]*$/, '')
 
-	# Write line with templating support.
-	static def write line\string
+	# Style line.
+	static def style line\string
+		if !(typeof line === 'string' || typeof line === 'number')
+			throw new TypeError 'Value must be a string or number.'
+
+		if typeof line === 'number' || typeof line === 'bigint'
+			line = String(line)
+
 		/** set black background. */
 		line = line.replace /<bg:black>([\s\S]*?)<\/bg:black>/g, "\x1b[40m$1\x1b[0m"
 
@@ -84,8 +163,23 @@ export default class Output
 
 		/** underline text. */
 		line = line.replace /<u>([\s\S]*?)<\/u>/g, "\x1b[4m$1\x1b[0m"
+		line = line.replace /<underline>([\s\S]*?)<\/underline>/g, "\x1b[4m$1\x1b[0m"
 
-		console.log noAnsi ? line.replace(/\u001b\[.*?m/g, '') : line
+		noAnsi ? stripAnsi(line) : line
+
+	# Write line with templating support.
+	static def write line\string
+		console.log style(line)
+
+	# Strip ANSI from a string.
+	static def stripAnsi line\string
+		if !(typeof line === 'string' || typeof line === 'number' || typeof line === 'bigint')
+			throw new TypeError "Expected a \"string\", got \"{typeof line}\""
+
+		if typeof line === 'number' || typeof line === 'bigint'
+			line = String(line)
+
+		line.replace(ansiRegex!, '')
 
 	# Write raw line.
 	static def line line\string
@@ -96,19 +190,120 @@ export default class Output
 		Output.write "<fg:green>{line}</fg:green>"
 
 	# Write error line.
-	static def error line\string
-		console.log ''
+	static def error error\string|Error, stack\boolean = false
+		if !(typeof error === 'string' || error instanceof Error)
+			throw new TypeError 'Value must be a string or Error.'
+
+		if typeof stack !== 'boolean'
+			throw new TypeError 'Value must be a boolean.'
+
+		newLine!
 
 		let length = 0
 
-		line.split('\n').forEach do(l) length = l.length > length ? l.length : length
+		const message = error instanceof Error ? error.message : error
+
+		message.split('\n').forEach do(l) length = l.length > length ? l.length : length
 
 		Output.write "<bg:red>{' '.repeat(length + 4)}</bg:red>"
 
-		line.split('\n').forEach do(l) Output.write "<bg:red>  {l + ' '.repeat(length - l.length)}  </bg:red>"
+		message.split('\n').forEach do(l) Output.write "<bg:red>  {l + ' '.repeat(length - l.length)}  </bg:red>"
 
 		Output.write "<bg:red>{' '.repeat(length + 4)}</bg:red>"
 
-		console.log ''
+		newLine!
+
+		if error instanceof Error && stack == true
+			console.error error.stack
+
+			newLine!
 
 		process.exit 1
+
+	# Write message.
+	static def message type\string, message\string, newLine\boolean = true, both\boolean = false
+		type = type.toLowerCase!
+
+		if !['error', 'warning', 'warn', 'info'].includes(type)
+			throw new Error 'Invalid message type.'
+
+		const bgMap = {
+			error: 'red',
+			info: 'blue',
+			warning: 'yellow'
+			warn: 'yellow'
+		}
+
+		let fg = ''
+
+		if type === 'warning' || type === 'warn'
+			fg = 'fg:red'
+
+		if self.internal
+			newLine = false
+
+		const topLeft     = !newLine ? (both ? '' : '\n' ) : '\n'
+		const msgType     = type === 'warning' ? 'warn' : type
+		const bottomRight = canAddLine() ? (newLine ? '\n' : '') : ''
+
+		self.write "{topLeft}  <bg:{bgMap[type]}>{fg ? '<' + fg + '>' : ''} {msgType.toUpperCase!} {fg ? '</' + fg + '>' : ''}</bg:{bgMap[type]}> {message}{bottomRight}"
+
+	# Write a line from right to left.
+	static def rtl value\string
+		const columns = process.stdout.columns
+
+		self.write ' '.repeat(columns - style(value).replace(/\u001b\[.*?m/g, '').length) + value
+
+	# Center a string.
+	static def center value\string
+		const columns = process.stdout.columns
+
+		self.write ' '.repeat((columns - style(value).replace(/\u001b\[.*?m/g, '').length) / 2) + value
+
+	static def between values\Array
+		const columns = process.stdout.columns
+
+		const total = values.reduce((do(a, b) a + style(b).replace(/\u001b\[.*?m/g, '').length), 0)
+
+		const spaces = columns - total
+
+		const space = ' '.repeat(spaces / (values.length - 1))
+
+		self.write values.join(space)
+
+	# Create a title.
+	static def title value\string
+		self.write "\n{' '.repeat(getPadding!)}{value}"
+
+	# Add a column to the console.
+	static def column key\any, value\any, wide\boolean = false
+		if value === undefined || value === null
+			value = ''
+
+		const keyTree = []
+
+		if Array.isArray(key)
+			for i in key
+				keyTree.push i if key.indexOf(i) !== 0
+
+			key = "{key[0]} [{keyTree.join(', ')}]"
+		else
+			key = key
+
+		const valueTree = []
+
+		if Array.isArray(value)
+			valueTree.push i for i in value
+
+			value = valueTree.join(' ')
+
+		if canExpand! then wide = true
+
+		const count   = wide ? process.stdout.columns : (process.stdout.columns > 180 ? 180 : process.stdout.columns)
+		const columns = '.'.repeat(count - stripAnsi(style(key)).length - (stripAnsi(style(value)).length + 2 + (getPadding! * 2)))
+
+		self.write "{' '.repeat(getPadding!)}{key} <dim>{columns}</dim> {value}{' '.repeat(getPadding!)}"
+
+	# Add a new line to the console.
+	static def newLine count\number = 1
+		console.log '\n'.repeat(count - 1)
