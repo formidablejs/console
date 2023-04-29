@@ -169,7 +169,3 @@ export default class Output {
      */
     static newLine(count?: number): void;
 }
-
-Output.group(({wide: false}) => {
-
-})
