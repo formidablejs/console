@@ -31,6 +31,11 @@ export default class Application {
     /**
      * @private
      */
+    looseMode: boolean;
+
+    /**
+     * @private
+     */
     signature: string;
 
     /**
@@ -41,7 +46,7 @@ export default class Application {
     /**
      * Instantiate a new application.
      */
-    constructor(name: string, version?: string | null);
+    constructor(name: string, version?: string | null, looseMode?: boolean);
 
     /**
      * Register a new command.
