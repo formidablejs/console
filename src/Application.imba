@@ -29,6 +29,9 @@ export default class Application
 	# Application version (semver).
 	prop version\string
 
+	# Loose mode.
+	prop looseMode\boolean = false
+
 	# Custom signature.
 	prop signature\string
 
@@ -42,9 +45,10 @@ export default class Application
 	prop #onDefaultCommandEvents\Function[] = []
 
 	# Instantiate console.
-	def constructor name\string, version\string|null = '1.0'
+	def constructor name\string, version\string|null = '1.0', looseMode\boolean = false
 		self.name = name
 		self.version = version
+		self.looseMode = looseMode
 
 	# Register a new command.
 	def register\Application command\Function
@@ -107,7 +111,9 @@ export default class Application
 		self.register DefaultCommand
 
 		for registeredCommand in self.commands
-			if !(registeredCommand.prototype instanceof Command) then throw new Error 'Invalid Command'
+			if !looseMode
+				if !(registeredCommand.prototype instanceof Command)
+					throw new Error 'Invalid Command'
 
 			const command = new registeredCommand
 
