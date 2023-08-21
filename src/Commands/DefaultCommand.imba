@@ -80,7 +80,7 @@ export default class DefaultCommand < Command
 
 		self
 
-	def displayHelp commands\Array, length\number
+	def displayHelp commands\Array, length\number, namespace\string|null = null
 		let display = []
 
 		self.helpOptions.forEach do(option)
@@ -111,7 +111,7 @@ export default class DefaultCommand < Command
 		if !(commands.length > 0) then return
 
 		self.write "\n
-<fg:green>Available commands:</fg:green>
+<fg:green>Available commands{namespace ? ' for the \"' + namespace + '\" namespace' : ''}:</fg:green>
 "
 
 		let previous = ''
@@ -206,6 +206,7 @@ export default class DefaultCommand < Command
 		const env\string|null       = self.option 'env'
 		const noAnsi\boolean        = self.option 'no-ansi', false
 		let   verbose\number        = 1
+		const similarCommands\Array = []
 
 		const verboseOption = this._incoming.opts.filter(do(opt)
 			opt.name == 'verbose'
@@ -236,7 +237,10 @@ export default class DefaultCommand < Command
 
 			# 			break
 
-			if !command
+			Object.keys(self.commands).forEach do(current)
+				similarCommands.push current if current.startsWith("{self.options.name}:")
+
+			if !command && similarCommands.length == 0
 				self.error "Command \"{self.options.name}\" is not defined."
 
 		if !command && self.options.options.length > 0
@@ -253,14 +257,15 @@ export default class DefaultCommand < Command
 
 			return 0
 
-		if !self.options.name && help
+		if (!self.options.name && help) || similarCommands.length > 0
 			let all\Array = []
 			let groups\Array = []
 			let length\number = 20
+			let allowed\Array = similarCommands.length > 0 ? similarCommands : Object.keys(self.commands)
 
 			Object.keys(self.commands).forEach do(command)
-				if self.commands[command].getName() !== 'default'
-					const group\string = self.commands[command].getGroup! ?? ''
+				if self.commands[command].getName() !== 'default' && allowed.includes(command)
+					const group\string = similarCommands.length > 0 ? '' : (self.commands[command].getGroup! ?? '')
 					const name\string = self.commands[command].getName!
 					const description\string = self.commands[command].description ?? ''
 
@@ -271,7 +276,7 @@ export default class DefaultCommand < Command
 			all = all.sort do(a, b) a.name.localeCompare(b.name)
 			groups = groups.sort do(a, b) a.name.localeCompare(b.name)
 
-			self.displayHelp all.concat(groups), length
+			self.displayHelp all.concat(groups), length, similarCommands.length > 0 ? self.options.name : null
 
 			return 0
 
